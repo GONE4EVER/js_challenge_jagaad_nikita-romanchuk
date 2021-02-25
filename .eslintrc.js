@@ -9,20 +9,22 @@ const allowedToReassignParams = [
 module.exports = {
   root: true,
   env: {
-    node: true,
     browser: true,
     es2020: true,
+    'jest/globals': true,
+    node: true,
   },
   extends: [
+    '@vue/airbnb',
     'plugin:vue/essential',
     'plugin:vue/recommended',
-    '@vue/airbnb',
   ],
   parserOptions: {
-    parser: 'babel-eslint',
     ecmaVersion: 8,
+    parser: 'babel-eslint',
     sourceType: 'module',
   },
+  plugins: [ 'jest' ],
   rules: {
     'array-bracket-spacing': [
       'error',
