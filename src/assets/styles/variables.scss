@@ -1,0 +1,22 @@
+/**
+ * Fonts
+ */
+$fontColor--primary: #444A59;
+
+/**
+ * Buttons
+ */
+ $buttonColor--primary: #D9D9D9;
+ $buttonColor--hover: #444A59;
+ $buttonFontColor--primary: #FFFFFF;
+
+/**
+ * Other
+ */
+$backgroundColor--primary: #F8F8F8;
+
+
+$baseSpacingOffset: 4px;
+@function spacing($multiplier) {
+  @return $baseSpacingOffset * $multiplier;
+}
