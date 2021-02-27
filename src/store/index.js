@@ -1,15 +1,26 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-Vue.use(Vuex);
+import venuesModule, { venuesModuleName } from '@/domains/Venue/store';
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+
+Vue.use(Vuex);
+Vue.config.devtools = true;
+
+const store = new Vuex.Store({
   modules: {
+    [venuesModuleName]: venuesModule,
   },
 });
+
+store.subscribeAction({
+  before: action => {
+    console.log(`before action ${action.type}`);
+  },
+  after: (action, state) => {
+    console.log(`after action ${action.type}`);
+    console.log({ state });
+  },
+});
+
+export default store;

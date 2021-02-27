@@ -1,0 +1,21 @@
+export const mutations = {
+  SET_FETCH_STATUS: 'SET_FETCH_STATUS',
+  SET_ERROR_STATE: 'SET_ERROR_STATE',
+  SET_ITEMS_LIST: 'SET_ITEMS_LIST',
+  SET_CURRENT_ID: 'SET_CURRENT_ID',
+};
+
+export const actions = {
+  FETCH_VENUE: 'FETCH_VENUE',
+  SET_ACTIVE_VENUE: 'SET_ACTIVE_VENUE',
+};
+
+export const internalActions = {
+  START_FETCH: 'START_FETCH',
+  COMPLETE_FETCH: 'COMPLETE_FETCH',
+  HANDLE_ERROR: 'HANDLE_ERROR',
+};
+
+export const getters = {
+  GET_CURRENT_VENUE: 'GET_CURRENT_VENUE',
+};
