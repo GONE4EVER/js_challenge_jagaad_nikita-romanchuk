@@ -5,7 +5,6 @@ const allowedToReassignParams = [
   'state', // Vuex mutations
 ];
 
-
 module.exports = {
   root: true,
   env: {
@@ -14,26 +13,16 @@ module.exports = {
     'jest/globals': true,
     node: true,
   },
-  extends: [
-    '@vue/airbnb',
-    'plugin:vue/essential',
-    'plugin:vue/recommended',
-  ],
+  extends: [ '@vue/airbnb', 'plugin:vue/essential', 'plugin:vue/recommended' ],
   parserOptions: {
     ecmaVersion: 8,
     parser: 'babel-eslint',
     sourceType: 'module',
   },
-  plugins: [ 'jest' ],
+  plugins: [ 'import', 'jest', 'vue' ],
   rules: {
-    'array-bracket-spacing': [
-      'error',
-      'always',
-    ],
-    'arrow-parens': [
-      'error',
-      'as-needed',
-    ],
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'arrow-parens': [ 'error', 'as-needed' ],
     'comma-dangle': [
       'error',
       {
@@ -44,10 +33,7 @@ module.exports = {
         functions: 'always-multiline',
       },
     ],
-    'eol-last': [
-      'error',
-      'always',
-    ],
+    'eol-last': [ 'error', 'always' ],
     'import/extensions': [
       'error',
       'always',
@@ -56,10 +42,7 @@ module.exports = {
         js: 'never',
       },
     ],
-    'import/newline-after-import': [
-      2,
-      { count: 2 },
-    ],
+    'import/newline-after-import': [ 2, { count: 1 } ],
     'import/order': [
       'error',
       {
@@ -67,48 +50,37 @@ module.exports = {
           order: 'asc',
         },
         'newlines-between': 'always',
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'index',
+        ],
         pathGroups: [
           {
-            pattern: '~/**',
+            pattern: '@/**',
             group: 'internal',
-            position: 'before',
+          },
+          {
+            pattern: '../**',
+            group: 'parent',
           },
           {
             pattern: './**',
-            group: 'internal',
-            position: 'after',
+            group: 'index',
           },
-        ],
-        pathGroupsExcludedImportTypes: [
-          'builtin',
-          'external',
         ],
       },
     ],
-    indent: [
-      'error',
-      2,
-      { SwitchCase: 1 },
-    ],
-    'linebreak-style': [
-      'error',
-      'unix',
-    ],
-    'newline-after-var': [
-      'error',
-      'always',
-    ],
+    indent: [ 'error', 2, { SwitchCase: 1 } ],
+    'linebreak-style': [ 'error', 'unix' ],
+    'max-len': [ 'error', { code: 100 } ],
+    'newline-after-var': [ 'error', 'always' ],
     'newline-before-return': [ 'error' ],
-    'no-console': production
-      ? 'warn'
-      : 'off',
-    'no-debugger': production
-      ? 'warn'
-      : 'off',
-    'no-multiple-empty-lines': [
-      'error',
-      { max: 2 },
-    ],
+    'no-console': production ? 'warn' : 'off',
+    'no-debugger': production ? 'warn' : 'off',
+    'no-multiple-empty-lines': [ 'error', { max: 2 } ],
     'no-param-reassign': [
       'error',
       {
@@ -121,13 +93,8 @@ module.exports = {
     'import/resolver': {
       'babel-module': {},
       node: {
-        paths: [
-          'src',
-        ],
-        extensions: [
-          '.vue',
-          '.js',
-        ],
+        paths: [ 'src' ],
+        extensions: [ '.vue', '.js' ],
       },
     },
   },
