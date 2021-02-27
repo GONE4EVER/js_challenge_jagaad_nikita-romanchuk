@@ -6,10 +6,7 @@ a,
 a:hover,
 a:visited{
   text-decoration: none;
-}
-
-html {
-  height: 100%;
+  color: inherit;
 }
 
 ul, li {
@@ -17,6 +14,11 @@ ul, li {
   padding: 0;
 
   list-style-type: none; 
+}
+
+h1, p, figure {
+  margin: 0;
+  font-weight: normal;
 }
 
 button {
