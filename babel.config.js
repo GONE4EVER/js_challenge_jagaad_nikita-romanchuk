@@ -11,6 +11,7 @@ module.exports = {
         root: [ './src' ],
         alias: {
           '/': './',
+          '@/': './',
         },
         stripExtensions: [
           '.js',
