@@ -3,9 +3,9 @@ import * as getters from './getters';
 import * as mutations from './mutations';
 import state from './state';
 
-const venuesModuleName = 'venues';
+// const venuesModuleName = 'venues';
 
-export { venuesModuleName };
+// export { venuesModuleName };
 
 export default {
   namespaced: true,

@@ -1,13 +1,15 @@
 export const mutations = {
   SET_FETCH_STATUS: 'SET_FETCH_STATUS',
   SET_ERROR_STATE: 'SET_ERROR_STATE',
-  SET_ITEMS_LIST: 'SET_ITEMS_LIST',
+  SET_VENUES_LIST: 'SET_VENUES_LIST',
   SET_CURRENT_VENUE: 'SET_CURRENT_VENUE',
 };
 
 export const actions = {
   FETCH_VENUE: 'FETCH_VENUE',
   SET_ACTIVE_VENUE: 'SET_ACTIVE_VENUE',
+
+  FETCH_VENUE_ACTIVITIES: 'FETCH_VENUE_ACTIVITIES',
 };
 
 export const internalActions = {
@@ -19,3 +21,6 @@ export const internalActions = {
 export const getters = {
   GET_CURRENT_VENUE: 'GET_CURRENT_VENUE',
 };
+
+export const venuesModuleName = 'venues';
+
