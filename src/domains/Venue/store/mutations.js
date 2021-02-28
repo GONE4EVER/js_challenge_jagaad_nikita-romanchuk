@@ -9,9 +9,12 @@ export const SET_ERROR_STATE = (state, payload) => {
 export const SET_ITEMS_LIST = (state, payload) => {
   const result = Array.isArray(payload) ? payload : [ payload ];
 
-  state.list = result;
+  state.venuesList = result;
 };
 
-export const SET_CURRENT_ID = (state, payload) => {
-  state.currentId = payload;
+export const SET_CURRENT_VENUE = (state, payload) => {
+  const { id, eventsCount } = payload;
+
+  state.current.id = id;
+  state.current.meta.limit = eventsCount;
 };

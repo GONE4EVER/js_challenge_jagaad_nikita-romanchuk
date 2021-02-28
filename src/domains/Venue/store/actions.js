@@ -1,6 +1,6 @@
 import VenuesService from '../services/Venue.service';
 
-import { actions, mutations, internalActions } from './constants';
+import { mutations, internalActions } from './constants';
 
 export const START_FETCH = ({ commit }) => {
   commit(mutations.SET_ERROR_STATE, null);
@@ -15,10 +15,10 @@ export const HANDLE_ERROR = ({ commit }, errorPayload) => {
   commit(mutations.SET_ERROR_STATE, errorPayload);
 };
 
-export const FETCH_VENUE = async ({ commit, dispatch }, payload) => {
+export const FETCH_VENUE = async ({ commit, dispatch }, id) => {
   try {
     dispatch(internalActions.START_FETCH);
-    const data = await VenuesService.getVenueById(payload);
+    const data = await VenuesService.getVenueById(id);
 
     commit(mutations.SET_ITEMS_LIST, data);
   } catch (err) {
@@ -28,12 +28,13 @@ export const FETCH_VENUE = async ({ commit, dispatch }, payload) => {
   }
 };
 
-export const SET_ACTIVE_VENUE = async ({ commit, dispatch }, payload) => {
-  const { id, shouldFetch } = payload;
-
-  if (shouldFetch) {
-    await dispatch(actions.FETCH_VENUE, id);
+export const SET_ACTIVE_VENUE = async ({ commit, state }, payload) => {
+  if (!state.venuesList.length) {
+    return;
   }
 
-  commit(mutations.SET_CURRENT_ID, id);
+  const id = Number(payload);
+  const { eventsCount } = state.venuesList.find(({ id: venueId }) => venueId === id);
+
+  commit(mutations.SET_CURRENT_VENUE, { id, eventsCount });
 };

@@ -2,7 +2,7 @@ export const mutations = {
   SET_FETCH_STATUS: 'SET_FETCH_STATUS',
   SET_ERROR_STATE: 'SET_ERROR_STATE',
   SET_ITEMS_LIST: 'SET_ITEMS_LIST',
-  SET_CURRENT_ID: 'SET_CURRENT_ID',
+  SET_CURRENT_VENUE: 'SET_CURRENT_VENUE',
 };
 
 export const actions = {
