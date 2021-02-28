@@ -2,7 +2,7 @@
   <button
     class="button"
     :class="classes"
-    @click="click"
+    @click="$emit('click')"
   >
     <slot />
   </button>
@@ -11,10 +11,6 @@
 <script>
 export default {
   props: {
-    click: {
-      type: Function,
-      required: true,
-    },
     icon: {
       type: Boolean,
       default: false,
@@ -58,7 +54,7 @@ export default {
 
   border: 1px solid $buttonColor--primary;
   border-radius: 100px;
-  background-color: $buttonFontColor--primary;
+  background-color: $backgroundColor--light;
 }
 
 .button--round {
@@ -77,14 +73,14 @@ export default {
   font-size: 13px;
 
   &:hover {
-    color: $buttonFontColor--primary;
+    color: $backgroundColor--light;
     border: 1px solid $buttonColor--hover;
     background-color: $buttonColor--hover;
   }
 }
 
 
-/* */
+/* TODO: put to wish list */
 .button--wishlist:hover {
   border: 1px solid $buttonColor--hover;
 }
