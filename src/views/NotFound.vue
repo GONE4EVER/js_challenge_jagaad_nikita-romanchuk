@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseLayout from '@/common/components/BaseLayout.vue';
+import BaseLayout from 'common/components/BaseLayout.vue';
 
 
 export default {
