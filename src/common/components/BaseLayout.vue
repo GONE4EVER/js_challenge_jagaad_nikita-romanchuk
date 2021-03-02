@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="baseLayout"
-    :class="{ container }"
-  >
+  <div class="baseLayout">
     <app-header class="baseLayout__header">
       <slot name="headerContent" />
     </app-header>
@@ -33,12 +30,6 @@ export default {
     AppHeader,
     AppFooter,
   },
-  props: {
-    container: {
-      type: Boolean,
-      default: false,
-    },
-  },
 };
 </script>
 
@@ -56,6 +47,8 @@ export default {
   align-items: center;
   flex-direction: row;
 
+  flex-shrink: 0;
+
   height: 60px;
 
   text-transform: uppercase;
@@ -70,6 +63,4 @@ export default {
 
   margin: 30px 0 20px;
 }
-
-
 </style>

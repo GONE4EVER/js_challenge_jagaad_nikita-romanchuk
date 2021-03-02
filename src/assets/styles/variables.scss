@@ -10,12 +10,20 @@ $fontColor--primary: #444A59;
  $buttonColor--hover: #444A59;
 
 /**
- * Other
+ * Backgrounds
  */
 $backgroundColor--primary: #F8F8F8;
 $backgroundColor--light: #FFFFFF;
 
+/**
+ * devices screen sizes
+ */
+$desktopViewport: 961px;
+$tabletViewport: 701px;
 
+/**
+ * Other
+ */
 $baseSpacingOffset: 4px;
 @function spacing($multiplier) {
   @return $baseSpacingOffset * $multiplier;

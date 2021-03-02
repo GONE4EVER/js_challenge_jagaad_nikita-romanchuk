@@ -1,14 +1,7 @@
 <template>
   <base-layout>
     <template #mainContent>
-      <ul>
-        <li
-          v-for="activity in activitiesList"
-          :key="activity.id"
-        >
-          {{ activity }}
-        </li>
-      </ul>
+      <products-list :products="activitiesList" />
 
       <app-pagination
         :length="pagesTotal"
@@ -19,18 +12,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 import AppPagination from 'common/components/AppPagination/AppPagination.vue';
 import BaseLayout from 'common/components/BaseLayout.vue';
+import ProductsList from 'domains/Activity/components/ProductsList.vue';
 import {
   actions as activityActions,
-  getters as activityGetters,
   activitiesModuleName,
 } from 'domains/Activity/store/constants';
 import {
   actions as venueActions,
-  getters as venueGetters,
   venuesModuleName,
 } from 'domains/Venue/store/constants';
 
@@ -40,14 +32,8 @@ const DEFAULT_PAGE = 1;
 
 export default {
   name: 'VenuesPage',
-  components: { BaseLayout, AppPagination },
+  components: { BaseLayout, AppPagination, ProductsList },
   computed: {
-    ...mapGetters(venuesModuleName, {
-      currentItemDetails: venueGetters.GET_CURRENT_VENUE,
-    }),
-    ...mapGetters(activitiesModuleName, {
-      readyToFetchActivities: activityGetters.IS_READY_FOR_FETCH,
-    }),
     ...mapState(venuesModuleName, {
       currentVenueId: state => state.currentId,
     }),
@@ -93,7 +79,7 @@ export default {
         const { limit } = this.requestMeta;
         const page = Number(value);
 
-        if (!Number.isInteger(page)) {
+        if (!Number.isInteger(page) || page <= 0) {
           this.$router.replace({ query: { page: DEFAULT_PAGE } });
         } else {
           this.setActivityOffset({
@@ -113,14 +99,11 @@ export default {
 
       if (navigationPage > pagesTotal) {
         this.$router.replace({ name: 'Not found' });
+
+        return;
       }
-    },
-    readyToFetchActivities: {
-      handler(state) {
-        if (state) {
-          this.fetchActivities({ venueId: this.currentVenueId });
-        }
-      },
+
+      this.fetchActivities({ venueId: this.currentVenueId });
     },
   },
   methods: {
