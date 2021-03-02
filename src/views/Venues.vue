@@ -1,5 +1,11 @@
 <template>
   <base-layout>
+    <template #headerContent>
+      <aside class="header-bag">
+        <the-cart />
+      </aside>
+    </template>
+
     <template #mainContent>
       <products-list :products="activitiesList" />
 
@@ -16,7 +22,8 @@ import { mapActions, mapState } from 'vuex';
 
 import AppPagination from 'common/components/AppPagination/AppPagination.vue';
 import BaseLayout from 'common/components/BaseLayout.vue';
-import ProductsList from 'domains/Activity/components/ProductsList.vue';
+import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
+import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
 import {
   actions as activityActions,
   activitiesModuleName,
@@ -32,7 +39,9 @@ const DEFAULT_PAGE = 1;
 
 export default {
   name: 'VenuesPage',
-  components: { BaseLayout, AppPagination, ProductsList },
+  components: {
+    BaseLayout, AppPagination, ProductsList, TheCart,
+  },
   computed: {
     ...mapState(venuesModuleName, {
       currentVenueId: state => state.currentId,
@@ -119,4 +128,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.header-bag {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+</style>
