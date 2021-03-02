@@ -1,45 +1,137 @@
 <template>
   <base-layout>
     <template #mainContent>
-      {{ currentItemDetails }}
+      <ul>
+        <li
+          v-for="activity in activitiesList"
+          :key="activity.id"
+        >
+          {{ activity }}
+        </li>
+      </ul>
+
+      <app-pagination
+        :length="pagesTotal"
+        :current.sync="currentPage"
+      />
     </template>
   </base-layout>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
-import BaseLayout from '@/common/components/BaseLayout.vue';
-import { venuesModuleName } from '@/domains/Venue/store';
-import { actions as venueActions, getters as venueGetters } from '@/domains/Venue/store/constants';
+import AppPagination from 'common/components/AppPagination/AppPagination.vue';
+import BaseLayout from 'common/components/BaseLayout.vue';
+import {
+  actions as activityActions,
+  getters as activityGetters,
+  activitiesModuleName,
+} from 'domains/Activity/store/constants';
+import {
+  actions as venueActions,
+  getters as venueGetters,
+  venuesModuleName,
+} from 'domains/Venue/store/constants';
 
-const { mapActions, mapGetters } = createNamespacedHelpers(venuesModuleName);
 
-const defautVenueId = process.env.VUE_APP_DEFAULT_VENUE_ID;
+const DEFAULT_VENUE_ID = process.env.VUE_APP_DEFAULT_VENUE_ID;
+const DEFAULT_PAGE = 1;
 
 export default {
-  components: { BaseLayout },
+  name: 'VenuesPage',
+  components: { BaseLayout, AppPagination },
   computed: {
-    ...mapGetters({
+    ...mapGetters(venuesModuleName, {
       currentItemDetails: venueGetters.GET_CURRENT_VENUE,
     }),
+    ...mapGetters(activitiesModuleName, {
+      readyToFetchActivities: activityGetters.IS_READY_FOR_FETCH,
+    }),
+    ...mapState(venuesModuleName, {
+      currentVenueId: state => state.currentId,
+    }),
+    ...mapState(activitiesModuleName, {
+      activitiesList: state => state.list,
+      requestMeta: state => state.meta,
+    }),
+    currentPage: {
+      get() {
+        const { offset, limit } = this.requestMeta;
+
+        return offset / limit + 1;
+      },
+      set(page) {
+        if (page === Number(this.$route.query.page)) {
+          return;
+        }
+
+        this.$router.push({ query: { page } });
+      },
+    },
+    pagesTotal() {
+      const { total, limit } = this.requestMeta;
+
+      return Math.ceil(total / limit);
+    },
   },
   watch: {
     '$route.params.id': {
       immediate: true,
-      handler(id) {
-        if (!id) {
-          this.$router.push({ params: { id: defautVenueId } });
+      async handler(venueId) {
+        if (!venueId) {
+          this.$router.replace({ params: { id: DEFAULT_VENUE_ID } });
         } else {
-          this.setActiveVenue({ id: +id, shouldFetch: true });
+          await this.fetchVenueById(venueId);
+          this.setActiveVenue(venueId);
+        }
+      },
+    },
+    '$route.query.page': {
+      immediate: true,
+      handler(value) {
+        const { limit } = this.requestMeta;
+        const page = Number(value);
+
+        if (!Number.isInteger(page)) {
+          this.$router.replace({ query: { page: DEFAULT_PAGE } });
+        } else {
+          this.setActivityOffset({
+            offset: (page - 1) * limit,
+            override: true,
+          });
+        }
+      },
+    },
+    requestMeta({ limit, total }) {
+      const navigationPage = Number(this.$route.query.page);
+      const pagesTotal = Math.ceil(total / limit);
+
+      if (!navigationPage || !pagesTotal) {
+        return;
+      }
+
+      if (navigationPage > pagesTotal) {
+        console.log('requestMeta watch', { navigationPage, pagesTotal });
+        this.$router.replace({ name: 'Not found' });
+      }
+    },
+    readyToFetchActivities: {
+      handler(state) {
+        if (state) {
+          this.fetchActivities({ venueId: this.currentVenueId });
         }
       },
     },
   },
   methods: {
-    ...mapActions({
+    ...mapActions(venuesModuleName, {
       fetchVenueById: venueActions.FETCH_VENUE,
       setActiveVenue: venueActions.SET_ACTIVE_VENUE,
+    }),
+    ...mapActions(activitiesModuleName, {
+      fetchActivities: activityActions.FETCH_ACTIVITIES,
+      setActivityOffset: activityActions.UPDATE_OFFSET,
     }),
   },
 };
