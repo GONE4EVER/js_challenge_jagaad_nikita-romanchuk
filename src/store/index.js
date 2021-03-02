@@ -22,9 +22,6 @@ store.subscribeAction({
   before: action => {
     console.log(`before action ${action.type}`);
   },
-  after: action => {
-    console.log(`after action ${action.type}`);
-  },
 });
 
 export default store;
