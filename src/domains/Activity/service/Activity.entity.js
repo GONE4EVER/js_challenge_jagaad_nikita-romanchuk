@@ -2,7 +2,8 @@ const propsMap = [
   [ 'uuid', 'id' ],
   [ 'description', 'description' ],
   [ 'discount', 'discount' ],
-  [ 'cover_image_url', 'coverImageUrl' ],
+  [ 'title', 'title' ],
+  [ 'cover_image_url', 'imageUrl' ],
   [ 'retail_price', 'retailPrice' ],
   [ 'original_retail_price', 'originalRetailPrice' ],
 ];
@@ -18,6 +19,14 @@ export default class Activity {
     }, {});
 
 
-    return config;
+    return {
+      ...config,
+      retailPrice: {
+        formattedValue: config.retailPrice.formatted_value,
+      },
+      originalRetailPrice: {
+        formattedValue: config.retailPrice.formatted_value,
+      },
+    };
   }
 }
