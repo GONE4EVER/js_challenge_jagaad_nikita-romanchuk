@@ -10,7 +10,7 @@ const activitiesState = {
     fetching: false,
 
     limit: DEFAULT_LIMIT,
-    offset: 0,
+    offset: null,
     total: null,
 
     sortBy: DEFAULT_SORTING,

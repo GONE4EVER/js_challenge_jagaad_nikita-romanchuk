@@ -1,7 +1,9 @@
 
 import ActivityService from '../service/Activity.service';
 
-import { getters, internalActions, mutations } from './constants';
+import {
+  actions, getters, internalActions, mutations,
+} from './constants';
 
 export const START_FETCH = ({ commit }) => {
   commit(mutations.SET_ERROR_STATE, null);
@@ -16,7 +18,7 @@ export const HANDLE_ERROR = ({ commit }, errorPayload) => {
   commit(mutations.SET_ERROR_STATE, errorPayload);
 };
 
-export const FETCH_ACTIVITIES = async (store, venueId) => {
+export const FETCH_ACTIVITIES = async (store, { venueId, updateOffset = false }) => {
   const {
     commit,
     dispatch,
@@ -40,15 +42,30 @@ export const FETCH_ACTIVITIES = async (store, venueId) => {
     };
 
     const data = await ActivityService.getVenueActivities(venueId, query);
-    const metaUpdate = {
-      offset: meta.offset += data.length,
-    };
 
     commit(mutations.SET_ACTIVITIES_LIST, data);
-    commit(mutations.SET_FETCH_META, metaUpdate);
+    if (updateOffset) {
+      dispatch(actions.UPDATE_OFFSET, { offset: data.length });
+    }
   } catch (err) {
     dispatch(internalActions.HANDLE_ERROR, err);
   } finally {
     dispatch(internalActions.COMPLETE_FETCH);
   }
+};
+
+export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) => {
+  if (override) {
+    commit(mutations.SET_FETCH_META, { offset });
+
+    return;
+  }
+
+  const { meta: { offset: stateOffset, total } } = state;
+
+  const newOffsetValue = stateOffset + offset;
+
+  commit(mutations.SET_FETCH_META, {
+    offset: newOffsetValue > total ? total : newOffsetValue,
+  });
 };

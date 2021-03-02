@@ -7,6 +7,7 @@ export const mutations = {
 
 export const actions = {
   FETCH_ACTIVITIES: 'FETCH_ACTIVITIES',
+  UPDATE_OFFSET: 'UPDATE_OFFSET',
 };
 
 export const internalActions = {
@@ -17,6 +18,7 @@ export const internalActions = {
 
 export const getters = {
   GET_ALL_ITEMS_FETCHED_FLAG: 'GET_ALL_ITEMS_FETCHED_FLAG',
+  IS_READY_FOR_FETCH: 'IS_READY_FOR_FETCH',
 };
 
 export const activitiesModuleName = 'activities';
