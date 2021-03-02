@@ -1,10 +1,6 @@
 const propsMap = [
-  [ 'meta_title', 'metaTitle' ],
-  [ 'events_count', 'eventsCount' ],
   [ 'id', 'id' ],
-  [ 'description', 'description' ],
-  [ 'address', 'address' ],
-  [ 'status', 'status' ],
+  [ 'events_count', 'eventsCount' ],
 ];
 
 export default class Vanue {
