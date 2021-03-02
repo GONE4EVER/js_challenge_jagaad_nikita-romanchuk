@@ -13,7 +13,11 @@ module.exports = {
     'jest/globals': true,
     node: true,
   },
-  extends: [ '@vue/airbnb', 'plugin:vue/essential', 'plugin:vue/recommended' ],
+  extends: [
+    '@vue/airbnb',
+    'plugin:vue/essential',
+    'plugin:vue/recommended',
+  ],
   parserOptions: {
     ecmaVersion: 8,
     parser: 'babel-eslint',

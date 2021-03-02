@@ -12,7 +12,7 @@
 
       <li
         v-for="page in pages"
-        :key="page.neighbor || page"
+        :key="page.key || page"
         class="pagination__item"
         :class="{'pagination__item--active': page === current}"
         @click="setPage(page)"
@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import ArrowLeftIcon from 'common/components/ArrowLeftIcon.vue';
-import ArrowRightIcon from 'common/components/ArrowRightIcon.vue';
+import ArrowLeftIcon from 'common/components/Icons/ArrowLeftIcon.vue';
+import ArrowRightIcon from 'common/components/Icons/ArrowRightIcon.vue';
 
 const DEFAULT_PLACEHOLDER = '...';
 
@@ -114,7 +114,7 @@ export default {
   methods: {
     generatePlaceholderItem(neighbor) {
       return {
-        neighbor: `${this.placeholderSymbol}_${neighbor}`,
+        key: `${this.placeholderSymbol}_${neighbor}`,
         placeholder: this.placeholderSymbol,
       };
     },

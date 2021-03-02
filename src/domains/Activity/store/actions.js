@@ -54,6 +54,13 @@ export const FETCH_ACTIVITIES = async (store, { venueId, updateOffset = false })
   }
 };
 
+/**
+ * Update offset obtained by GET requests for activities
+ * @param {Object} store - store object reference obtained from vuex
+ * @param {Object} payload - payload object
+ * @param {Number} payload.offset - new offset value
+ * @param {Boolean} payload.override - flag, responsible for indicating
+ */
 export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) => {
   if (override) {
     commit(mutations.SET_FETCH_META, { offset });
@@ -68,4 +75,9 @@ export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) =
   commit(mutations.SET_FETCH_META, {
     offset: newOffsetValue > total ? total : newOffsetValue,
   });
+};
+
+// cart
+export const ADD_TO_CART = ({ commit }, itemId) => {
+  commit(mutations.ADD_ITEM_TO_CART, itemId);
 };

@@ -2,7 +2,7 @@
   <article class="product">
     <figure class="product__image-wrapper">
       <img
-        :src="`${imageUrl}`"
+        :src="imageUrl"
         class="product__image"
         alt="Product"
         itemprop="image"
@@ -45,7 +45,9 @@
 
       <base-button
         class="product__add-to-cart"
+        :class="buttonClass"
         primary
+        @click="addToCart(id)"
       >
         {{ buttonText }}
       </base-button>
@@ -54,19 +56,19 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 import BaseButton from 'common/components/BaseButton.vue';
+import { actions, getters, activitiesModuleName } from 'domains/Activity/store/constants';
 
 const DESCRIPTION_PLACEHOLDER = 'description missing';
+
 
 export default {
   components: {
     BaseButton,
   },
   props: {
-    alreadyInCart: {
-      type: Boolean,
-      default: false,
-    },
     id: {
       type: String,
       required: true,
@@ -97,20 +99,30 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(activitiesModuleName, {
+      checkIfIsAlreadyInCart: getters.GET_ITEMS_PRESENCE_IN_CART,
+    }),
+    isAlreadyInCart() {
+      return this.checkIfIsAlreadyInCart(this.id);
+    },
     buttonText() {
-      return this.alreadyInCart
+      return this.isAlreadyInCart
         ? 'in cart'
         : 'add to cart';
+    },
+    buttonClass() {
+      return this.isAlreadyInCart
+        ? 'button--in-cart'
+        : '';
     },
     descriptionOutput() {
       return this.description || DESCRIPTION_PLACEHOLDER;
     },
   },
-  created() {
-    console.log({
-      originalRetailPrice: this.originalRetailPrice,
-      retailPrice: this.retailPrice,
-    });
+  methods: {
+    ...mapActions(activitiesModuleName, {
+      addToCart: actions.ADD_TO_CART,
+    }),
   },
 };
 </script>

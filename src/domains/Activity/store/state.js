@@ -15,6 +15,10 @@ const activitiesState = {
 
     sortBy: DEFAULT_SORTING,
   },
+
+  cart: {
+    list: [],
+  },
 };
 
 export default activitiesState;
