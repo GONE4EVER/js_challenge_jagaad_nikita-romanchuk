@@ -112,7 +112,6 @@ export default {
       }
 
       if (navigationPage > pagesTotal) {
-        console.log('requestMeta watch', { navigationPage, pagesTotal });
         this.$router.replace({ name: 'Not found' });
       }
     },
