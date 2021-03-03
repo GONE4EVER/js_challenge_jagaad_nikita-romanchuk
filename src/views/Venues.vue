@@ -3,6 +3,7 @@
     <template #headerContent>
       <aside class="header-bag">
         <the-cart />
+        <the-wishlist />
       </aside>
     </template>
 
@@ -24,6 +25,7 @@ import AppPagination from 'common/components/AppPagination/AppPagination.vue';
 import BaseLayout from 'common/components/BaseLayout.vue';
 import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
 import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
+import TheWishlist from 'domains/Activity/components/TheWishlist/TheWishlist.vue';
 import {
   actions as activityActions,
   activitiesModuleName,
@@ -40,7 +42,11 @@ const DEFAULT_PAGE = 1;
 export default {
   name: 'VenuesPage',
   components: {
-    BaseLayout, AppPagination, ProductsList, TheCart,
+    BaseLayout,
+    AppPagination,
+    ProductsList,
+    TheCart,
+    TheWishlist,
   },
   computed: {
     ...mapState(venuesModuleName, {
