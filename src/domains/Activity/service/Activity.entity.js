@@ -1,3 +1,10 @@
+import BaseEntity from 'common/entities/Base.entity';
+
+/**
+ * explicit declaration of the set of prop that will be used across the application
+ *
+ * defines property names that will be used in application
+ */
 const propsMap = [
   [ 'uuid', 'id' ],
   [ 'description', 'description' ],
@@ -8,27 +15,28 @@ const propsMap = [
   [ 'original_retail_price', 'originalRetailPrice' ],
 ];
 
-export default class Activity {
+/**
+ * Represents set of data that will be used across the application
+ * in order to keep store and actual data objects clean & tidy
+ */
+export default class Activity extends BaseEntity {
   constructor(data) {
-    const config = propsMap.reduce((result, prop) => {
-      const [ srcName, newName ] = prop;
+    const config = super(propsMap, data);
 
-      result[newName] = data[srcName];
+    const retailPrice = {
+      formattedValue: config.retailPrice.formatted_value,
+      value: config.retailPrice.value,
+    };
 
-      return result;
-    }, {});
-
+    const originalRetailPrice = {
+      formattedValue: config.originalRetailPrice.formatted_value,
+      value: config.retailPrice.value,
+    };
 
     return {
       ...config,
-      retailPrice: {
-        formattedValue: config.retailPrice.formatted_value,
-        value: config.retailPrice.value,
-      },
-      originalRetailPrice: {
-        formattedValue: config.originalRetailPrice.formatted_value,
-        value: config.retailPrice.value,
-      },
+      retailPrice,
+      originalRetailPrice,
     };
   }
 }
