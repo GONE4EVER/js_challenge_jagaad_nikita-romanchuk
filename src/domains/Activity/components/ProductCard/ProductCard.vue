@@ -7,7 +7,14 @@
         alt="Product"
         itemprop="image"
       >
-      <slot name="imageContent" />
+      <base-button
+        class="product__wishlist-button button--wishlist"
+        :class="wishlistButtonDisabled"
+        round
+        @click="addToWishlist(id)"
+      >
+        <add-to-wishlist-icon />
+      </base-button>
     </figure>
 
     <div class="product__details">
@@ -45,7 +52,7 @@
 
       <base-button
         class="product__add-to-cart"
-        :class="buttonClass"
+        :class="{'button--in-cart':isAlreadyInCart}"
         primary
         @click="addToCart(id)"
       >
@@ -61,11 +68,14 @@ import { mapActions, mapGetters } from 'vuex';
 import BaseButton from 'common/components/BaseButton.vue';
 import { actions, getters, activitiesModuleName } from 'domains/Activity/store/constants';
 
+import AddToWishlistIcon from './AddToWishlistIcon.vue';
+
 const DESCRIPTION_PLACEHOLDER = 'description missing';
 
 
 export default {
   components: {
+    AddToWishlistIcon,
     BaseButton,
   },
   props: {
@@ -101,19 +111,28 @@ export default {
   computed: {
     ...mapGetters(activitiesModuleName, {
       checkIfIsAlreadyInCart: getters.GET_ITEMS_PRESENCE_IN_CART,
+      checkIfIsAlreadyInWishlist: getters.GET_ITEMS_PRESENCE_IN_WISHLIST,
     }),
     isAlreadyInCart() {
       return this.checkIfIsAlreadyInCart(this.id);
+    },
+    isAlreadyInWishlist() {
+      return this.checkIfIsAlreadyInWishlist(this.id);
     },
     buttonText() {
       return this.isAlreadyInCart
         ? 'in cart'
         : 'add to cart';
     },
-    buttonClass() {
-      return this.isAlreadyInCart
-        ? 'button--in-cart'
-        : '';
+    wishlistButtonDisabled() {
+      const { isAlreadyInCart, isAlreadyInWishlist } = this;
+
+      console.log(this.id);
+
+      return {
+        'button--disabled': isAlreadyInWishlist || isAlreadyInCart,
+        'button--in-wishlist': isAlreadyInWishlist,
+      };
     },
     descriptionOutput() {
       return this.description || DESCRIPTION_PLACEHOLDER;
@@ -122,6 +141,7 @@ export default {
   methods: {
     ...mapActions(activitiesModuleName, {
       addToCart: actions.ADD_TO_CART,
+      addToWishlist: actions.ADD_TO_WISHLIST,
     }),
   },
 };
@@ -140,15 +160,14 @@ export default {
 /* image */
 .product__image-wrapper {
   padding: 20px;
-  position: relative;
   text-align: center;
+  position: relative;
 }
 
 .product__image {
   max-width: 100%;
   height: auto;
 }
-
 
 /* details */
 .product__details {
@@ -204,10 +223,42 @@ export default {
   margin-top: auto;
 }
 
+/* controls */
+.button--disabled {
+  pointer-events: none;
+}
+
 .button--in-cart {
   pointer-events: none;
 
   background-color: $buttonColor--primary;
+}
+
+.button--in-wishlist {
+  & > .icon {
+    fill: $buttonColor--secondary;
+  }
+}
+
+.button--wishlist:hover {
+  border: 1px solid $buttonColor--secondary;
+
+  & > .icon {
+    fill: $buttonColor--secondary;
+  }
+}
+
+.product__wishlist-button {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 </style>
