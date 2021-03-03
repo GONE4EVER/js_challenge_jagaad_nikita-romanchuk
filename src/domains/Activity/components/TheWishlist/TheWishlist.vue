@@ -1,7 +1,10 @@
 <template>
-  <div class="wishlist header-bag__wishlist-count">
+  <div class="wishlist wishlist__count">
     <wishlist-icon />
-    <span class="wishlist-counter">{{ wishlistItemsCount }}</span>
+    <span
+      v-if="wishlistItemsCount > 0"
+      class="wishlist-counter"
+    >{{ wishlistItemsCount }}</span>
   </div>
 </template>
 
