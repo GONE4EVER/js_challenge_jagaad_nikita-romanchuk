@@ -74,19 +74,19 @@ export default {
 
   &:hover {
     color: $backgroundColor--light;
-    border: 1px solid $buttonColor--hover;
-    background-color: $buttonColor--hover;
+    border: 1px solid $buttonColor--secondary;
+    background-color: $buttonColor--secondary;
   }
 }
 
 
 /* TODO: put to wish list */
 .button--wishlist:hover {
-  border: 1px solid $buttonColor--hover;
+  border: 1px solid $buttonColor--secondary;
 }
 
 .button--wishlist:hover > .icon {
-  fill: $buttonColor--hover;
+  fill: $buttonColor--secondary;
 }
 
 .button--in-cart {
