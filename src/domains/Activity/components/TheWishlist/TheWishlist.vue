@@ -1,0 +1,67 @@
+<template>
+  <div class="wishlist header-bag__wishlist-count">
+    <wishlist-icon />
+    <span class="wishlist-counter">{{ wishlistItemsCount }}</span>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+import { activitiesModuleName } from 'domains/Activity/store/constants';
+
+import WishlistIcon from './WishlistIcon.vue';
+
+export default {
+  components: { WishlistIcon },
+  computed: {
+    ...mapState(activitiesModuleName, {
+      wishlistItemsCount: state => state.wishlist.list.length,
+    }),
+  },
+};
+</script>
+
+<style lang="scss">
+.wishlist {
+  height: 25px;
+
+  display: flex;
+  align-items: flex-end;
+
+  .icon {
+    height: auto;
+    fill: $buttonColor--secondary;
+  }
+
+
+  &.wishlist__count {
+    margin: 0 15px;
+    position: relative;
+
+    .icon {
+      width: 17px;
+    }
+
+    .wishlist-counter {
+      position: absolute;
+      right: -12px;
+
+      width: 13px;
+      height: 13px;
+
+      display: flex;
+      align-self: flex-start;
+      justify-content: center;
+      align-items: center;
+
+      font-size: 8px;
+      text-align: center;
+
+      border-radius: 50%;
+      color: $fontColor--light;
+      background-color: $cartBatchBackground;
+    }
+  }
+}
+</style>

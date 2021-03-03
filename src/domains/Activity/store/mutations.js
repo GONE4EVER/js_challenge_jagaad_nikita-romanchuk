@@ -31,5 +31,20 @@ export const ADD_ITEM_TO_CART = (state, itemId) => {
 
 export const REMOVE_ITEM_FROM_CART = (state, itemId) => {
   state.cart.list = state.cart.list
-    .filter(productId => productId !== itemId);
+    .filter(product => product.id !== itemId);
+};
+
+// wishlist
+export const ADD_ITEM_TO_WISHLIST = (state, itemId) => {
+  const item = state.list.find(({ id }) => id === itemId);
+
+  state.wishlist.list = [
+    ...state.wishlist.list,
+    item,
+  ];
+};
+
+export const REMOVE_ITEM_FROM_WISHLIST = (state, itemId) => {
+  state.wishlist.list = state.wishlist.list
+    .filter(product => product.id !== itemId);
 };

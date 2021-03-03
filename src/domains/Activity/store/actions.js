@@ -81,3 +81,17 @@ export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) =
 export const ADD_TO_CART = ({ commit }, itemId) => {
   commit(mutations.ADD_ITEM_TO_CART, itemId);
 };
+
+export const REMOVE_FROM_CART = ({ commit }, itemId) => {
+  commit(mutations.REMOVE_ITEM_FROM_CART, itemId);
+};
+
+// wishlist
+export const ADD_TO_WISHLIST = ({ commit }, itemId) => {
+  console.log(321);
+  commit(mutations.ADD_ITEM_TO_WISHLIST, itemId);
+};
+
+export const REMOVE_FROM_WISHLIST = ({ commit }, itemId) => {
+  commit(mutations.REMOVE_ITEM_FROM_WISHLIST, itemId);
+};

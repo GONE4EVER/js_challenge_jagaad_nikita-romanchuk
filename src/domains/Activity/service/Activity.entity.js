@@ -26,7 +26,7 @@ export default class Activity {
         value: config.retailPrice.value,
       },
       originalRetailPrice: {
-        formattedValue: config.retailPrice.formatted_value,
+        formattedValue: config.originalRetailPrice.formatted_value,
         value: config.retailPrice.value,
       },
     };

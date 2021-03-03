@@ -19,6 +19,10 @@ const activitiesState = {
   cart: {
     list: [],
   },
+
+  wishlist: {
+    list: [],
+  },
 };
 
 export default activitiesState;

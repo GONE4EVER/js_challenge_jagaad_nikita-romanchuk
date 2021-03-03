@@ -1,5 +1,6 @@
 export const GET_ALL_ITEMS_FETCHED_FLAG = ({ meta }) => meta.total === meta.offset;
 
+// cart
 export const GET_ITEMS_PRESENCE_IN_CART = (
   { cart: { list } },
 ) => searchedId => list.some(({ id }) => id === searchedId);
@@ -13,3 +14,7 @@ export const GET_CART_TOTAL_PRICE = state => state.cart.list.reduce((result, ite
 
   return result + price;
 }, 0);
+
+export const GET_ITEMS_PRESENCE_IN_WISHLIST = (
+  { wishlist: { list } },
+) => searchedId => list.some(({ id }) => id === searchedId);
