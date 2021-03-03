@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import ArrowLeftIcon from 'common/components/Icons/ArrowLeftIcon.vue';
-import ArrowRightIcon from 'common/components/Icons/ArrowRightIcon.vue';
+import ArrowLeftIcon from './ArrowLeftIcon.vue';
+import ArrowRightIcon from './ArrowRightIcon.vue';
 
 const DEFAULT_PLACEHOLDER = '...';
 
