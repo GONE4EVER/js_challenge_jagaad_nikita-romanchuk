@@ -52,7 +52,7 @@
 
       <base-button
         class="product__add-to-cart"
-        :class="{'button--in-cart':isAlreadyInCart}"
+        :class="{'button--in-cart':inCart}"
         primary
         @click="addToCart(id)"
       >
@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 import BaseButton from 'common/components/BaseButton.vue';
-import { actions, getters, activitiesModuleName } from 'domains/Activity/store/constants';
+import { actions, activitiesModuleName } from 'domains/Activity/store/constants';
 
 import AddToWishlistIcon from './AddToWishlistIcon.vue';
 
@@ -79,6 +79,14 @@ export default {
     BaseButton,
   },
   props: {
+    inCart: {
+      type: Boolean,
+      default: false,
+    },
+    inWishlist: {
+      type: Boolean,
+      default: false,
+    },
     id: {
       type: String,
       required: true,
@@ -109,34 +117,27 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(activitiesModuleName, {
-      checkIfIsAlreadyInCart: getters.GET_ITEMS_PRESENCE_IN_CART,
-      checkIfIsAlreadyInWishlist: getters.GET_ITEMS_PRESENCE_IN_WISHLIST,
-    }),
-    isAlreadyInCart() {
-      return this.checkIfIsAlreadyInCart(this.id);
-    },
-    isAlreadyInWishlist() {
-      return this.checkIfIsAlreadyInWishlist(this.id);
-    },
     buttonText() {
-      return this.isAlreadyInCart
+      return this.inCart
         ? 'in cart'
         : 'add to cart';
     },
     wishlistButtonDisabled() {
-      const { isAlreadyInCart, isAlreadyInWishlist } = this;
+      const { inCart, inWishlist } = this;
 
-      console.log(this.id);
+      console.log({ inCart, inWishlist });
 
       return {
-        'button--disabled': isAlreadyInWishlist || isAlreadyInCart,
-        'button--in-wishlist': isAlreadyInWishlist,
+        'button--disabled': inCart || inWishlist,
+        'button--in-wishlist': inWishlist,
       };
     },
     descriptionOutput() {
       return this.description || DESCRIPTION_PLACEHOLDER;
     },
+  },
+  updated() {
+    console.log(this.id);
   },
   methods: {
     ...mapActions(activitiesModuleName, {

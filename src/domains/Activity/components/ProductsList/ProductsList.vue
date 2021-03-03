@@ -5,12 +5,20 @@
       :key="product.id"
       class="product-list__item"
     >
-      <product-card v-bind="product" />
+      <product-card
+        v-bind="product"
+        :in-cart="checkIfIsAlreadyInCart(product.id)"
+        :in-wishlist="checkIfIsAlreadyInWishlist(product.id)"
+      />
     </li>
   </ul>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+import { activitiesModuleName, getters } from 'domains/Activity/store/constants';
+
 import ProductCard from '../ProductCard/ProductCard.vue';
 
 
@@ -24,6 +32,12 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  computed: {
+    ...mapGetters(activitiesModuleName, {
+      checkIfIsAlreadyInCart: getters.GET_ITEMS_PRESENCE_IN_CART,
+      checkIfIsAlreadyInWishlist: getters.GET_ITEMS_PRESENCE_IN_WISHLIST,
+    }),
   },
 };
 </script>
