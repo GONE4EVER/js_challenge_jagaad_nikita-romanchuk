@@ -9,12 +9,8 @@
 </template>
 
 <script>
-import BaseLayout from 'common/components/BaseLayout.vue';
-
-
 export default {
   name: 'NotFoundPage',
-  components: { BaseLayout },
 };
 </script>
 

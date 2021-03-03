@@ -65,7 +65,6 @@
 <script>
 import { mapActions } from 'vuex';
 
-import BaseButton from 'common/components/BaseButton.vue';
 import { actions, activitiesModuleName } from 'domains/Activity/store/constants';
 
 import AddToWishlistIcon from './AddToWishlistIcon.vue';
@@ -76,7 +75,6 @@ const DESCRIPTION_PLACEHOLDER = 'description missing';
 export default {
   components: {
     AddToWishlistIcon,
-    BaseButton,
   },
   props: {
     inCart: {

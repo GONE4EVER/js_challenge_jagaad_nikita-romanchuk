@@ -22,7 +22,6 @@
 import { mapActions, mapState } from 'vuex';
 
 import AppPagination from 'common/components/AppPagination/AppPagination.vue';
-import BaseLayout from 'common/components/BaseLayout.vue';
 import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
 import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
 import TheWishlist from 'domains/Activity/components/TheWishlist/TheWishlist.vue';
@@ -42,7 +41,6 @@ const DEFAULT_PAGE = 1;
 export default {
   name: 'VenuesPage',
   components: {
-    BaseLayout,
     AppPagination,
     ProductsList,
     TheCart,
