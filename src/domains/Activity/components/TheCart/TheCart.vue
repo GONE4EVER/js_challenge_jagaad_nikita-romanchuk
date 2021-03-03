@@ -1,13 +1,13 @@
 <template>
   <div class="cart cart__count">
     <div class="cart__price">
-      € {{ totalPrice }}
+      {{ selectedCurrency }} {{ totalPrice }}
     </div>
 
     <cart-icon />
     <span
-      v-show="cartItemsCount > 0"
-      class="bag__item-counter"
+      v-if="cartItemsCount > 0"
+      class="cart-counter"
     >
       {{ cartItemsCount }}
     </span>
@@ -23,6 +23,9 @@ import CartIcon from './CartIcon.vue';
 
 export default {
   components: { CartIcon },
+  data: () => ({
+    selectedCurrency: '€',
+  }),
   computed: {
     ...mapState(activitiesModuleName, {
       cartItemsCount: state => state.cart.list.length,
@@ -43,7 +46,7 @@ export default {
 
   .icon {
     height: auto;
-    fill: $buttonColor--hover;
+    fill: $buttonColor--secondary;
   }
 
   .cart__price {
@@ -53,14 +56,14 @@ export default {
   }
 
   &.cart__count {
-    margin-left: 10px;
+    margin: 0 15px;
     position: relative;
 
     .icon {
       width: 17px;
     }
 
-    .bag__item-counter {
+    .cart-counter {
       position: absolute;
       right: -12px;
 
@@ -76,8 +79,8 @@ export default {
       text-align: center;
 
       border-radius: 50%;
-      color: #ffffff;
-      background-color: #358ED7;
+      color: $fontColor--light;
+      background-color: $cartBatchBackground;
     }
   }
 }

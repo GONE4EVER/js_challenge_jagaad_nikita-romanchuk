@@ -19,3 +19,9 @@
     <!-- eslint-enable max-len-->
   </svg>
 </template>
+
+<script>
+export default {
+
+};
+</script>
