@@ -1,25 +1,70 @@
 <template>
-  <div class="wishlist wishlist__count">
-    <wishlist-icon />
-    <span
-      v-if="wishlistItemsCount > 0"
-      class="wishlist-counter"
-    >{{ wishlistItemsCount }}</span>
-  </div>
+  <app-dropdown>
+    <template #default="{elementRef}">
+      <div
+        :ref="elementRef"
+        class="wishlist wishlist__count"
+      >
+        <wishlist-icon />
+
+        <span
+          v-if="!!wishlistItemsCount"
+          class="wishlist-counter"
+        >{{ wishlistItemsCount }}</span>
+      </div>
+    </template>
+
+    <template #dropdownContent>
+      <h3 class="wishlist-content__title">
+        {{ titleText }}
+      </h3>
+
+      <menu-list
+        v-if="!!wishlistItemsCount"
+        :list="wishlistItems"
+        max="300px"
+        @remove="removeFromWishlist"
+      />
+
+      <div
+        v-else
+        class="wishlist-content__placeholder"
+      >
+        {{ placeholder }}
+      </div>
+    </template>
+  </app-dropdown>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
+import MenuList from 'common/components/MenuList.vue';
 import { wishlistModule } from 'store';
 
 import WishlistIcon from './WishlistIcon.vue';
 
+const PLACEHOLDER_TEXT = 'Nothing has been added here yet...';
+const TITLE_TEXT = 'Your Wishlist';
+
 export default {
-  components: { WishlistIcon },
+  components: {
+    MenuList,
+    WishlistIcon,
+  },
+  data: () => ({
+    placeholder: PLACEHOLDER_TEXT,
+    titleText: TITLE_TEXT,
+  }),
   computed: {
     ...mapState(wishlistModule.name, {
       wishlistItemsCount: state => state.list.length,
+      wishlistItems: state => state.list,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      removeFromWishlist: wishlistModule.actionsList.REMOVE_FROM_COLLECTION,
     }),
   },
 };
@@ -29,6 +74,8 @@ export default {
 .wishlist {
   height: 25px;
 
+  cursor: pointer;
+
   display: flex;
   align-items: flex-end;
 
@@ -36,7 +83,6 @@ export default {
     height: auto;
     fill: $buttonColor--secondary;
   }
-
 
   &.wishlist__count {
     margin: 0 10px;
@@ -66,5 +112,18 @@ export default {
       background-color: $cartBatchBackground;
     }
   }
+}
+
+.wishlist-content__title {
+  margin: 0;
+  padding: 10px;
+
+  font-weight: normal;
+  border-bottom: 1px solid $backgroundColor--dark;
+}
+
+.wishlist-content__placeholder {
+  padding: 10px;
+  white-space: nowrap;
 }
 </style>
