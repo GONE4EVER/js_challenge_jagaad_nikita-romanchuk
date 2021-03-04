@@ -1,6 +1,9 @@
 <template>
   <div class="baseLayout">
-    <app-header class="baseLayout__header">
+    <app-header
+      class="baseLayout__header"
+      sticky
+    >
       <slot name="headerContent" />
     </app-header>
 
