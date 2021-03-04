@@ -11,15 +11,15 @@
 <script>
 import { mapState } from 'vuex';
 
-import { activitiesModuleName } from 'domains/Activity/store/constants';
+import { wishlistModule } from 'store';
 
 import WishlistIcon from './WishlistIcon.vue';
 
 export default {
   components: { WishlistIcon },
   computed: {
-    ...mapState(activitiesModuleName, {
-      wishlistItemsCount: state => state.wishlist.list.length,
+    ...mapState(wishlistModule.name, {
+      wishlistItemsCount: state => state.list.length,
     }),
   },
 };
@@ -39,7 +39,7 @@ export default {
 
 
   &.wishlist__count {
-    margin: 0 15px;
+    margin: 0 10px;
     position: relative;
 
     .icon {

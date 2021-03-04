@@ -8,7 +8,10 @@ class BaseEntity {
       return result;
     }, {});
 
-    return config;
+    return {
+      ...config,
+      props: propsMap.map(([ , key ]) => key),
+    };
   }
 }
 

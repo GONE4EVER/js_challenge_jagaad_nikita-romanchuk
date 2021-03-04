@@ -7,8 +7,8 @@
     >
       <product-card
         v-bind="product"
-        :in-cart="checkIfIsAlreadyInCart(product.id)"
-        :in-wishlist="checkIfIsAlreadyInWishlist(product.id)"
+        :in-cart="isInCart(product.id)"
+        :in-wishlist="isInWishlist(product.id)"
       />
     </li>
   </ul>
@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import { activitiesModuleName, getters } from 'domains/Activity/store/constants';
+import { cartModule, wishlistModule } from 'store';
 
 import ProductCard from '../ProductCard/ProductCard.vue';
 
@@ -34,9 +34,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(activitiesModuleName, {
-      checkIfIsAlreadyInCart: getters.GET_ITEMS_PRESENCE_IN_CART,
-      checkIfIsAlreadyInWishlist: getters.GET_ITEMS_PRESENCE_IN_WISHLIST,
+    ...mapGetters({
+      isInCart: cartModule.gettersList.IS_ITEM_IN_COLLECTION,
+      isInWishlist: wishlistModule.gettersList.IS_ITEM_IN_COLLECTION,
     }),
   },
 };

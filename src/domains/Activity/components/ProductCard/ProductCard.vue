@@ -65,7 +65,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import { actions, activitiesModuleName } from 'domains/Activity/store/constants';
+import { cartModule, wishlistModule } from 'store';
 
 import AddToWishlistIcon from './AddToWishlistIcon.vue';
 
@@ -123,8 +123,6 @@ export default {
     wishlistButtonDisabled() {
       const { inCart, inWishlist } = this;
 
-      console.log({ inCart, inWishlist });
-
       return {
         'button--disabled': inCart || inWishlist,
         'button--in-wishlist': inWishlist,
@@ -134,13 +132,10 @@ export default {
       return this.description || DESCRIPTION_PLACEHOLDER;
     },
   },
-  updated() {
-    console.log(this.id);
-  },
   methods: {
-    ...mapActions(activitiesModuleName, {
-      addToCart: actions.ADD_TO_CART,
-      addToWishlist: actions.ADD_TO_WISHLIST,
+    ...mapActions({
+      addToCart: cartModule.actionsList.ADD_TO_COLLECTION,
+      addToWishlist: wishlistModule.actionsList.ADD_TO_COLLECTION,
     }),
   },
 };

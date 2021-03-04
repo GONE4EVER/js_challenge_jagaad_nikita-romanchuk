@@ -15,14 +15,6 @@ const activitiesState = {
 
     sortBy: DEFAULT_SORTING,
   },
-
-  cart: {
-    list: [],
-  },
-
-  wishlist: {
-    list: [],
-  },
 };
 
 export default activitiesState;

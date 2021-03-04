@@ -59,7 +59,7 @@ export const FETCH_ACTIVITIES = async (store, { venueId, updateOffset = false })
  * @param {Object} store - store object reference obtained from vuex
  * @param {Object} payload - payload object
  * @param {Number} payload.offset - new offset value
- * @param {Boolean} payload.override - flag, responsible for indicating
+ * @param {Boolean} payload.override - true = override existing value, false = add to existing value
  */
 export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) => {
   if (override) {
@@ -75,23 +75,4 @@ export const UPDATE_OFFSET = ({ commit, state }, { offset, override = false }) =
   commit(mutations.SET_FETCH_META, {
     offset: newOffsetValue > total ? total : newOffsetValue,
   });
-};
-
-// cart
-export const ADD_TO_CART = ({ commit }, itemId) => {
-  commit(mutations.ADD_ITEM_TO_CART, itemId);
-};
-
-export const REMOVE_FROM_CART = ({ commit }, itemId) => {
-  commit(mutations.REMOVE_ITEM_FROM_CART, itemId);
-};
-
-// wishlist
-export const ADD_TO_WISHLIST = ({ commit }, itemId) => {
-  console.log(321);
-  commit(mutations.ADD_ITEM_TO_WISHLIST, itemId);
-};
-
-export const REMOVE_FROM_WISHLIST = ({ commit }, itemId) => {
-  commit(mutations.REMOVE_ITEM_FROM_WISHLIST, itemId);
 };

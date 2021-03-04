@@ -1,4 +1,4 @@
-import BaseEntity from 'common/entities/Base.entity';
+import BaseDataEntity from 'common/entities/Data.base.entity';
 
 /**
  * explicit declaration of the set of prop that will be used across the application
@@ -19,7 +19,7 @@ const propsMap = [
  * Represents set of data that will be used across the application
  * in order to keep store and actual data objects clean & tidy
  */
-export default class Activity extends BaseEntity {
+export default class Activity extends BaseDataEntity {
   constructor(data) {
     const config = super(propsMap, data);
 

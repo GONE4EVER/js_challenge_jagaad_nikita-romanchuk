@@ -17,7 +17,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 
-import { activitiesModuleName, getters } from 'domains/Activity/store/constants';
+import { cartModule } from 'store';
 
 import CartIcon from './CartIcon.vue';
 
@@ -27,11 +27,11 @@ export default {
     selectedCurrency: '€',
   }),
   computed: {
-    ...mapState(activitiesModuleName, {
-      cartItemsCount: state => state.cart.list.length,
+    ...mapState(cartModule.name, {
+      cartItemsCount: state => state.list.length,
     }),
-    ...mapGetters(activitiesModuleName, {
-      totalPrice: getters.GET_CART_TOTAL_PRICE,
+    ...mapGetters({
+      totalPrice: cartModule.gettersList.GET_TOTAL_PRICE,
     }),
   },
 };
@@ -56,7 +56,7 @@ export default {
   }
 
   &.cart__count {
-    margin: 0 15px;
+    margin: 0 10px;
     position: relative;
 
     .icon {

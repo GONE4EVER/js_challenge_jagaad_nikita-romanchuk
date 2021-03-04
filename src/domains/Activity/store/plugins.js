@@ -4,13 +4,9 @@ import { activitiesModuleName, mutations as activityMutations } from './constant
 
 
 const { SET_CURRENT_VENUE } = venueMutations;
-const {
-  ADD_ITEM_TO_CART,
-  SET_FETCH_META,
-  REMOVE_ITEM_FROM_WISHLIST,
-} = activityMutations;
+const { SET_FETCH_META } = activityMutations;
 
-
+/* eslint import/prefer-default-export: 0 */
 export const subscribeToVenueCurrentIdChange = store => {
   store.subscribe(({ type, payload }) => {
     const venueIdMutation = `${venuesModuleName}/${SET_CURRENT_VENUE}`;
@@ -24,25 +20,6 @@ export const subscribeToVenueCurrentIdChange = store => {
       store.commit(setMetaMutation, {
         total: currentVenueData?.eventsCount,
       });
-    }
-  });
-};
-
-export const subscribeToAddingToCart = store => {
-  store.subscribe(({ type, payload }) => {
-    const addToCartMutation = `${activitiesModuleName}/${ADD_ITEM_TO_CART}`;
-
-    if (type === addToCartMutation) {
-      const isItemInWishlist = store.state[activitiesModuleName].wishlist.list
-        .some(({ id }) => id === payload);
-
-      if (!isItemInWishlist) {
-        return;
-      }
-
-      const removeItemFromWishlist = `${activitiesModuleName}/${REMOVE_ITEM_FROM_WISHLIST}`;
-
-      store.commit(removeItemFromWishlist, payload);
     }
   });
 };
