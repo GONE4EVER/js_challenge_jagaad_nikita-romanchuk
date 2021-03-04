@@ -33,10 +33,15 @@ export default class Activity extends BaseDataEntity {
       value: config.retailPrice.value,
     };
 
+    const bestPrice = this.discount > 0
+      ? retailPrice.value
+      : originalRetailPrice.value;
+
     return {
       ...config,
       retailPrice,
       originalRetailPrice,
+      bestPrice,
     };
   }
 }
