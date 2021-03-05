@@ -8,12 +8,23 @@
     </template>
 
     <template #mainContent>
-      <products-list :products="activitiesList" />
+      <div class="container venues-page-container">
+        <app-spinner
+          v-if="requestMeta.fetching || isLoadingVenue"
+          class="venues-page-container__placeholder"
+        />
 
-      <app-pagination
-        :length="pagesTotal"
-        :current.sync="currentPage"
-      />
+        <products-list
+          v-else
+          :products="activitiesList"
+        />
+
+        <app-pagination
+          v-if="!!requestMeta.limit"
+          :length="pagesTotal"
+          :current.sync="currentPage"
+        />
+      </div>
     </template>
   </base-layout>
 </template>
@@ -22,6 +33,7 @@
 import { mapActions, mapState } from 'vuex';
 
 import AppPagination from 'common/components/AppPagination/AppPagination.vue';
+import AppSpinner from 'common/components/AppSpinner.vue';
 import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
 import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
 import TheWishlist from 'domains/Activity/components/TheWishlist/TheWishlist.vue';
@@ -45,10 +57,12 @@ export default {
     ProductsList,
     TheCart,
     TheWishlist,
+    AppSpinner,
   },
   computed: {
     ...mapState(venuesModuleName, {
       currentVenueId: state => state.currentId,
+      isLoadingVenue: state => state.meta.fetching,
     }),
     ...mapState(activitiesModuleName, {
       activitiesList: state => state.list,
@@ -137,5 +151,15 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+}
+
+.venues-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .venues-page-container__placeholder {
+    margin: auto;
+  }
 }
 </style>
