@@ -19,7 +19,7 @@ import { mapGetters } from 'vuex';
 
 import { cartModule, wishlistModule } from 'store';
 
-import ProductCard from '../ProductCard/ProductCard.vue';
+import ProductCard from './ProductCard/ProductCard.vue';
 
 
 export default {
