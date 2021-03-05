@@ -14,7 +14,6 @@ export default {};
 }
 
 .appSpinner {
-  margin: 0 auto 1.5em auto;
   position: relative;
   width: 3em;
   height: 3em;
