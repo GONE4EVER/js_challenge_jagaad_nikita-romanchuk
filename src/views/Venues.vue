@@ -129,7 +129,7 @@ export default {
       }
 
       if (navigationPage > pagesTotal) {
-        this.$router.replace({ name: 'Not found' });
+        this.$router.replace({ name: 'NotFound' });
 
         return;
       }
