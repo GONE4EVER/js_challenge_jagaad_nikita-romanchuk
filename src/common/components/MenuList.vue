@@ -13,7 +13,7 @@
           {{ title }}
         </span>
 
-        <span class="menu-item__text">
+        <span class="menu-item__price menu-item__text">
           {{ selectedCurrency }} {{ bestPrice | formatPrice }}
         </span>
       </section>
@@ -61,7 +61,7 @@ export default {
 
 <style lang="scss">
 .menu-list {
-  background-color: $backgroundColor--light;
+  background-color: $backgroundColor--primary;
 
   padding: 0 10px;
   overflow: hidden auto;
@@ -74,7 +74,10 @@ export default {
     justify-content: space-between;
 
     width: 350px;
-    padding: 10px 0;
+    margin: 10px 0;
+    padding: 5px;
+
+    background-color: $backgroundColor--light;
 
     &:not(:last-child):after {
       content: "";
@@ -96,7 +99,7 @@ export default {
       margin-right: spacing(4);
 
       .menu-item__text:not(:last-child) {
-        margin-bottom: spacing(2);
+        margin-bottom: spacing(4);
       }
     }
 
@@ -109,12 +112,23 @@ export default {
       overflow: hidden;
 
       text-transform: initial;
-      font-size: 14px;
+      font-size: 16px;
       word-break: break-word;
+    }
+
+    &:hover > .menu-item__close-icon {
+      opacity: 1;
+    }
+
+    .menu-item__price {
+      color: $fontColor--secondary
     }
 
     .menu-item__close-icon {
       padding: 6px;
+      opacity: 0;
+
+      transition: all ease-in .2s;
 
       border: none;
 

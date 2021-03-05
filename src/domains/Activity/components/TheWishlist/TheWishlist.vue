@@ -125,5 +125,9 @@ export default {
 .wishlist-content__placeholder {
   padding: 10px;
   white-space: nowrap;
+
+  line-height: 19px;
+  letter-spacing: 0.43px;
+  color: $fontColor--secondary;
 }
 </style>

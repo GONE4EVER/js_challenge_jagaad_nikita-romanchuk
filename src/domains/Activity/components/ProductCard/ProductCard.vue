@@ -189,7 +189,7 @@ export default {
   line-height: 19px;
   letter-spacing: 0.43px;
 
-  color: #808080;
+  color: $fontColor--secondary
 }
 
 
