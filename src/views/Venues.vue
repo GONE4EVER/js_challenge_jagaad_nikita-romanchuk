@@ -33,7 +33,6 @@
 import { mapActions, mapState } from 'vuex';
 
 import AppPagination from 'common/components/AppPagination/AppPagination.vue';
-import AppSpinner from 'common/components/AppSpinner.vue';
 import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
 import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
 import TheWishlist from 'domains/Activity/components/TheWishlist/TheWishlist.vue';
@@ -57,7 +56,6 @@ export default {
     ProductsList,
     TheCart,
     TheWishlist,
-    AppSpinner,
   },
   computed: {
     ...mapState(venuesModuleName, {
