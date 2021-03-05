@@ -10,12 +10,19 @@ const venueProvider = new BaseProvider(VenueEntity);
 
 export default {
   async getVenueById(venueId) {
-    const result = await pipe(
-      VenueRepository.getById,
-      parseResponse,
-      async data => venueProvider.transform(await data),
-    )(venueId);
+    try {
+      const result = await pipe(
+        VenueRepository.getById,
+        parseResponse,
+        async data => venueProvider.transform(await data),
+      )(venueId);
 
-    return result;
+      return result;
+    } catch (err) {
+      return {
+        error: true,
+        payload: err.message,
+      };
+    }
   },
 };

@@ -61,6 +61,7 @@ export default {
     ...mapState(venuesModuleName, {
       currentVenueId: state => state.currentId,
       isLoadingVenue: state => state.meta.fetching,
+      fetchError: state => state.error,
     }),
     ...mapState(activitiesModuleName, {
       activitiesList: state => state.list,
@@ -87,6 +88,11 @@ export default {
     },
   },
   watch: {
+    fetchError(payload) {
+      if (payload) {
+        this.$router.replace({ name: 'NotFound' });
+      }
+    },
     '$route.params.id': {
       immediate: true,
       async handler(venueId) {

@@ -20,19 +20,19 @@ export const FETCH_VENUE = async ({ commit, dispatch }, venueId) => {
     dispatch(internalActions.START_FETCH);
     const data = await VenuesService.getVenueById(venueId);
 
+    if (data.error) {
+      throw new Error(data.payload);
+    }
+
     commit(mutations.SET_VENUES_LIST, data);
-  } catch (err) {
-    dispatch(internalActions.HANDLE_ERROR, err);
+  } catch ({ message }) {
+    dispatch(internalActions.HANDLE_ERROR, message);
   } finally {
     dispatch(internalActions.COMPLETE_FETCH);
   }
 };
 
-export const SET_ACTIVE_VENUE = async ({ commit, state }, venueId) => {
-  if (!state.list.length) {
-    return;
-  }
-
+export const SET_ACTIVE_VENUE = async ({ commit }, venueId) => {
   commit(mutations.SET_CURRENT_VENUE, Number(venueId));
 };
 

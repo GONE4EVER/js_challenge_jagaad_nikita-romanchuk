@@ -16,16 +16,6 @@ const propsMap = [
  */
 export default class Vanue extends BaseDataEntity {
   constructor(data) {
-    const baseConfig = super(propsMap, data);
-
-    const coordinates = {
-      latitude: data.latitude,
-      longitude: data.longitude,
-    };
-
-    return {
-      ...baseConfig,
-      coordinates,
-    };
+    super(propsMap, data);
   }
 }

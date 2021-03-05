@@ -40,7 +40,6 @@ class Wishlist extends ProductsCollection {
       store.subscribeAction({
         after: ({ type, payload: itemKey }, rootState) => {
           if (type === ADD_ITEM_TO_CART) {
-            debugger;
             const isItemInWishlist = rootState[wishlistModuleName].list
               .some(product => wishlistKeyExtractor(product) === itemKey);
 

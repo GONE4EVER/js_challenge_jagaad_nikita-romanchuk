@@ -4,11 +4,9 @@
     :class="{ 'appHeader--sticky': sticky }"
   >
     <section class="appHeader__content container">
-      <router-link to="/">
-        <h1 class="appHeader__title">
-          brand
-        </h1>
-      </router-link>
+      <h1 class="appHeader__title">
+        brand
+      </h1>
 
       <slot />
     </section>
