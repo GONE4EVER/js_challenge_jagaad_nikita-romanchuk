@@ -8,9 +8,7 @@
     </app-header>
 
     <main class="baseLayout__main">
-      <div class="container">
-        <slot name="mainContent" />
-      </div>
+      <slot name="mainContent" />
     </main>
 
     <app-footer class="baseLayout__footer">
