@@ -1,3 +1,8 @@
+/**
+ * for docker purposes only
+ */
+
+/* eslint-disable-next-line */
 const express = require('express');
 
 const app = express();

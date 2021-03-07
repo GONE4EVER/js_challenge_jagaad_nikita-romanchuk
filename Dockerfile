@@ -1,23 +1,26 @@
 FROM node:lts-alpine
 
-# install simple http server for serving static content
-RUN npm install -g http-server
-
-# make the 'app' folder the current working directory
 WORKDIR /app
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-COPY package*.json ./
-COPY .env.development.local ./.env.production
+# installing express in order to serve dist directory within
+# docker container, otherwise the only way for the app to navigate
+# will be in-app navigation and there'll be no opportunity to navigate
+# via browser (e.g. entering other venue id or page manually)
 
-# install project dependencies
+COPY package*.json ./
+
+RUN npm install express
+
+
+COPY server.js ./server.js
+
 RUN npm install
 
-# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
+COPY .env.production.local ./.env.production
 
 # build app for production with minification
 RUN npm run build
 
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD [ "node", "server.js" ]
