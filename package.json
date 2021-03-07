@@ -8,7 +8,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
-    "lint:fix": "vue-cli-service lint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "lint:fix": "vue-cli-service lint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "docker:build": "docker build -t js_challenge_vue .",
+    "docker:start": "docker run -i -p 8080:8080 --rm --name js_challenge_vue__webapp js_challenge_vue"
   },
   "dependencies": {
     "axios": "^0.21.1",
