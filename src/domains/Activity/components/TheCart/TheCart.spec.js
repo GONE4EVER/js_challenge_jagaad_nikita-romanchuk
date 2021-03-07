@@ -31,11 +31,6 @@ describe('ProductCard default state', () => {
     });
 
     cartWrapper = mount(TheCart, {
-      data() {
-        return {
-          selectedCurrency: '€',
-        };
-      },
       mixins: [ formatPriceMixin ],
       store,
       localVue,
@@ -108,11 +103,6 @@ describe('Adding items to cart', () => {
     });
 
     const cartWrapper = mount(TheCart, {
-      data() {
-        return {
-          selectedCurrency: '€',
-        };
-      },
       mixins: [ formatPriceMixin ],
       store,
       localVue,
