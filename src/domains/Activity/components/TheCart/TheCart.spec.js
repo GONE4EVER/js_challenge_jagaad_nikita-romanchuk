@@ -87,23 +87,15 @@ describe('ProductCard default state', () => {
 describe('Adding items to cart', () => {
   const sampleItemData = {
     id: 123321,
-    discount: 20,
+    discount: 20, // used in cart.repository for obtaining total price
     retailPrice: {
       formattedValue: '€ 80',
       value: 80,
     },
-    originalRetailPrice: {
-      formattedValue: '€ 100',
-      value: 100,
-    },
   };
 
-  let store;
-
-  let cartWrapper;
-
-  beforeEach(async () => {
-    store = new Vuex.Store({
+  it('Cart total price changes when adding/removing items', async () => {
+    const store = new Vuex.Store({
       modules: {
         [cartModule.name]: cartModule.initializeModule(),
         activities: {
@@ -115,7 +107,7 @@ describe('Adding items to cart', () => {
       },
     });
 
-    cartWrapper = mount(TheCart, {
+    const cartWrapper = mount(TheCart, {
       data() {
         return {
           selectedCurrency: '€',
@@ -126,15 +118,21 @@ describe('Adding items to cart', () => {
       localVue,
     });
 
+    // check total price & it's DOM output
+    expect(cartWrapper.vm.totalPrice).toBe(0);
+    expect(cartWrapper.find('.cart-counter').exists()).toBeFalsy();
+
     await cartWrapper.vm.$store.dispatch(
       cartModule.actionsList.ADD_TO_COLLECTION,
       sampleItemData.id,
     );
-  });
 
-  it('Cart total price changes when adding/removing items', async () => {
-    expect(cartWrapper.vm.totalPrice).toBe(0);
+    // check total price in vue instance
     expect(cartWrapper.vm.totalPrice).toBe(sampleItemData.retailPrice.value);
+
+    await localVue.nextTick();
+    // check total price DOM output
+    expect(cartWrapper.find('.cart-counter').text()).toBe('1');
 
     const priceContainer = cartWrapper.find('.cart__price');
     const [ , totalPriceOutput ] = priceContainer
@@ -152,4 +150,3 @@ describe('Adding items to cart', () => {
     expect(cartWrapper.vm.totalPrice).toBe(0);
   });
 });
-
