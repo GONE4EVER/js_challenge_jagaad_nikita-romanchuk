@@ -1,4 +1,4 @@
-import BaseDataEntity from 'common/entities/Data.base.entity';
+import BaseDataEntity from '@/common/entities/Data.base.entity';
 
 /**
  * explicit declaration of the set of prop that will be used across the application

@@ -32,18 +32,18 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 
-import AppPagination from 'common/components/AppPagination/AppPagination.vue';
-import ProductsList from 'domains/Activity/components/ProductsList/ProductsList.vue';
-import TheCart from 'domains/Activity/components/TheCart/TheCart.vue';
-import TheWishlist from 'domains/Activity/components/TheWishlist/TheWishlist.vue';
+import AppPagination from '@/common/components/AppPagination/AppPagination.vue';
+import ProductsList from '@/domains/Activity/components/ProductsList/ProductsList.vue';
+import TheCart from '@/domains/Activity/components/TheCart/TheCart.vue';
+import TheWishlist from '@/domains/Activity/components/TheWishlist/TheWishlist.vue';
 import {
   actions as activityActions,
   activitiesModuleName,
-} from 'domains/Activity/store/constants';
+} from '@/domains/Activity/store/constants';
 import {
   actions as venueActions,
   venuesModuleName,
-} from 'domains/Venue/store/constants';
+} from '@/domains/Venue/store/constants';
 
 
 const DEFAULT_VENUE_ID = process.env.VUE_APP_DEFAULT_VENUE_ID;

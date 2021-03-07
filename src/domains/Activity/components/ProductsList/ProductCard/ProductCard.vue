@@ -65,7 +65,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import { cartModule, wishlistModule } from 'store';
+import { cartModule, wishlistModule } from '@/store';
 
 import AddToWishlistIcon from './AddToWishlistIcon.vue';
 
