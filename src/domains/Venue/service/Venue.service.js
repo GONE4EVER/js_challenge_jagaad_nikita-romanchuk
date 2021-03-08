@@ -1,6 +1,6 @@
-import BaseProvider from 'common/providers/Base.provider';
-import parseResponse from 'utils/parseResponse';
-import pipe from 'utils/pipe';
+import BaseProvider from '@/common/providers/Base.provider';
+import parseResponse from '@/utils/parseResponse';
+import pipe from '@/utils/pipe';
 
 import VenueEntity from './Venue.enitity';
 import VenueRepository from './Venue.repository';

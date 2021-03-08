@@ -61,12 +61,11 @@ export default {
     },
   },
   /**
-   * declaring those constants just to avoid
+   * declaring min constant just to avoid
    * the usage of "magic numbers" in code
    */
   data: () => ({
     min: 1,
-    displayCount: 4,
   }),
   computed: {
     pages() {

@@ -1,4 +1,4 @@
-import ProductsCollection from 'common/providers/ProductsCollection.repository';
+import ProductsCollection from '@/common/providers/ProductsCollection.repository';
 
 
 const WISHLIST_MODULE_NAME = 'wishlist';

@@ -1,4 +1,4 @@
-import { mutations as venueMutations, venuesModuleName } from 'domains/Venue/store/constants';
+import { mutations as venueMutations, venuesModuleName } from '@/domains/Venue/store/constants';
 
 import { activitiesModuleName, mutations as activityMutations } from './constants';
 

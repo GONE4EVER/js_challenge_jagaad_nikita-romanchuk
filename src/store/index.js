@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import Cart from 'domains/Activity/service/Cart.repository';
-import Wishlist from 'domains/Activity/service/Wishlist.repository';
-import activitiesModule from 'domains/Activity/store';
-import { activitiesModuleName } from 'domains/Activity/store/constants';
-import { subscribeToVenueCurrentIdChange } from 'domains/Activity/store/plugins';
-import venuesModule from 'domains/Venue/store';
-import { venuesModuleName } from 'domains/Venue/store/constants';
+import Cart from '@/domains/Activity/service/Cart.repository';
+import Wishlist from '@/domains/Activity/service/Wishlist.repository';
+import activitiesModule from '@/domains/Activity/store';
+import { activitiesModuleName } from '@/domains/Activity/store/constants';
+import { subscribeToVenueCurrentIdChange } from '@/domains/Activity/store/plugins';
+import venuesModule from '@/domains/Venue/store';
+import { venuesModuleName } from '@/domains/Venue/store/constants';
 
 Vue.use(Vuex);
 Vue.config.devtools = true;
