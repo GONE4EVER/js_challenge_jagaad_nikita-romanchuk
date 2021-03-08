@@ -17,6 +17,7 @@ module.exports = {
     '@vue/airbnb',
     'plugin:vue/essential',
     'plugin:vue/recommended',
+    'plugin:vue/strongly-recommended',
   ],
   parserOptions: {
     ecmaVersion: 8,
