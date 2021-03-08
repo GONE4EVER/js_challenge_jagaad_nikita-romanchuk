@@ -14,6 +14,7 @@ import TheCart from './TheCart.vue';
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
+localVue.component('app-dropdown', AppDropdown);
 localVue.component('base-button', BaseButton);
 
 const cartModule = new Cart();
