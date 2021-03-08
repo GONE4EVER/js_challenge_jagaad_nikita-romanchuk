@@ -1,8 +1,8 @@
 <template>
-  <footer class="footer">
-    <section class="footer__content container">
+  <footer class="appFooter">
+    <section class="appFooter__content container">
       <slot name="footerTitle">
-        <p class="footer__title">
+        <p class="appFooter__title">
           {{ title }}
         </p>
       </slot>
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss">
-.footer__title {
+.appFooter__title {
   text-transform: uppercase;
   letter-spacing: 1.37px;
 }
