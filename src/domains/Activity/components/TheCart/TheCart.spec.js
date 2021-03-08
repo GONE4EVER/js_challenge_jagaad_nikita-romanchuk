@@ -59,7 +59,11 @@ describe('ProductCard: Base output', () => {
   });
 
   it('Interacts correctly with the app-dropdown component', async () => {
-    expect(cartWrapper.find('.dropdown-wrapper').exists()).toBeTruthy();
+    expect(
+      cartWrapper
+        .find('.dropdown-wrapper')
+        .exists(),
+    ).toBeTruthy();
 
     const appDropdownWrapper = cartWrapper.findComponent(AppDropdown);
 
@@ -111,7 +115,11 @@ describe('Product card: Adding items to cart', () => {
 
     // check total price & it's DOM output
     expect(cartWrapper.vm.totalPrice).toBe(0);
-    expect(cartWrapper.find('.cart-counter').exists()).toBeFalsy();
+    expect(
+      cartWrapper
+        .find('.cart-counter')
+        .exists(),
+    ).toBeFalsy();
 
     await cartWrapper.vm.$store.dispatch(
       cartModule.actionsList.ADD_TO_COLLECTION,
@@ -123,7 +131,11 @@ describe('Product card: Adding items to cart', () => {
 
     await localVue.nextTick();
     // check total price DOM output
-    expect(cartWrapper.find('.cart-counter').text()).toBe('1');
+    expect(
+      cartWrapper
+        .find('.cart-counter')
+        .text(),
+    ).toBe('1');
 
     const priceContainer = cartWrapper.find('.cart__price');
     const [ , totalPriceOutput ] = priceContainer
