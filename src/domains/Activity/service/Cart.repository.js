@@ -1,4 +1,4 @@
-import ProductsCollection from 'common/providers/ProductsCollection.repository';
+import ProductsCollection from '@/common/providers/ProductsCollection.repository';
 
 
 const CART_MODULE_NAME = 'cart';

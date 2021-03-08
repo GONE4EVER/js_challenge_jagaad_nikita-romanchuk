@@ -16,8 +16,8 @@
 <script>
 import { mapState } from 'vuex';
 
-import { activitiesModuleName } from 'domains/Activity/store/constants';
-import { venuesModuleName } from 'domains/Venue/store/constants';
+import { activitiesModuleName } from '@/domains/Activity/store/constants';
+import { venuesModuleName } from '@/domains/Venue/store/constants';
 
 export default {
   name: 'NotFoundPage',

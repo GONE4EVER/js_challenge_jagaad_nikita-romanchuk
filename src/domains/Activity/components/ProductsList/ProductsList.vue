@@ -17,7 +17,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import { cartModule, wishlistModule } from 'store';
+import { cartModule, wishlistModule } from '@/store';
 
 import ProductCard from './ProductCard/ProductCard.vue';
 

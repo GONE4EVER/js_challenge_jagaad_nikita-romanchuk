@@ -45,10 +45,10 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 
-import AppDropdown from 'common/components/AppDropdown.vue';
-import MenuList from 'common/components/MenuList.vue';
-import formatPrice from 'common/mixins/formatPrice';
-import { cartModule } from 'store';
+import AppDropdown from '@/common/components/AppDropdown.vue';
+import MenuList from '@/common/components/MenuList.vue';
+import formatPrice from '@/common/mixins/formatPrice';
+import { cartModule } from '@/store';
 
 import CartIcon from './CartIcon.vue';
 

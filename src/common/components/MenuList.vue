@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import formatPrice from 'common/mixins/formatPrice';
+import formatPrice from '@/common/mixins/formatPrice';
 
 
 export default {

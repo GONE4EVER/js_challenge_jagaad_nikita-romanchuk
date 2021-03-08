@@ -39,8 +39,8 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 
-import MenuList from 'common/components/MenuList.vue';
-import { wishlistModule } from 'store';
+import MenuList from '@/common/components/MenuList.vue';
+import { wishlistModule } from '@/store';
 
 import WishlistIcon from './WishlistIcon.vue';
 
