@@ -10,6 +10,9 @@ In order to make things work you should have a few tools installed:
 
 ## Before you run the app or the tests (mandatory)
 __Before__ running app either via Docker or Vue-CLI, you should have all corresponding __environment files filled__.
+There're three environments specified:
+1. `development` - running unit tests or the app itself via `npm run serve`. Requires `.env.development.local`;
+3. `production` - cypress tests via `npm run test:e2e` and the app itself via Docker. Requires `.env.production.local`.
 
 Example of filling the file:
 ```
@@ -19,17 +22,13 @@ VUE_APP_DEFAULT_ACTIVITIES_LIMIT=6
 ```
 >Make sure the venue with id equal to `VUE_APP_DEFAULT_VENUE_ID` exists, otherwise you'll be navigated to error page by default.
 
-###
-There're three environments specified:
-1. `development` - running unit tests or the app itself via `npm run serve`. Requires __.env.development.local__;
-3. `production` - cypress tests via `npm run test:e2e` and the app itself via Docker. Requires __.env.production.local__.
 
 ## Running the app
 ```sh
 npm run docker:build
 npm run docker:start
 ```
-After docker does all it's ✨magic ✨, the app will be available on [localhost:8080][dockerized-app-link].
+After docker does all it's ✨magic✨, the app will be available on [localhost:8080][dockerized-app-link].
 
 Wanna see logs? Run
 ```sh
@@ -41,7 +40,6 @@ Mandatory _(inside the project's root folder)_:
 ```sh
 npm i
 ```
-
 
 #### Unit
 __Jest__ is used as a unit-testing tool.
