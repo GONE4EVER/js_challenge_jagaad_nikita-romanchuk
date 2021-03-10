@@ -17,7 +17,7 @@ VUE_APP_BASE_URI=https://api.musement.com/api/v3
 VUE_APP_DEFAULT_VENUE_ID=164
 VUE_APP_DEFAULT_ACTIVITIES_LIMIT=6
 ```
->Make sure ```DEFAULT_VENUE_ID``` corresponds the existing venue, otherwise you'll be navigated to error page.
+>Make sure the venue with id equal to `VUE_APP_DEFAULT_VENUE_ID` exists, otherwise you'll be navigated to error page by default.
 
 ###
 There're three environments specified:
