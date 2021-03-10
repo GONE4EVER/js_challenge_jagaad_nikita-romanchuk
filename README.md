@@ -32,7 +32,7 @@ npm run docker:start
 After docker does all it's ✨magic ✨, the app will be available on [localhost:8080][dockerized-app-link].
 
 ## Testing
-Project testing runs via @vue/test-utils [VueCLI](https://cli.vuejs.org/).
+Project testing are run via @vue/cli-service, distributed as a part of [VueCLI](https://cli.vuejs.org/).
 So, in case you want to run them, pls make sure it is installed globally:
 ```sh
 npm install -g @vue/cli
