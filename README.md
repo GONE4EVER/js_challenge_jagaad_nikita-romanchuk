@@ -63,7 +63,13 @@ There're a few e2e tests provided:
     2.1 Cart initial state;
     2.2 Adding items to cart
     2.3 Removing items from cart
-Running tests:
+
+##### Running tests:
+Auto:
+```sh
+npm run test:e2e -- --headless
+```
+Manual:
 ```sh
 npm run test:e2e
 ```
