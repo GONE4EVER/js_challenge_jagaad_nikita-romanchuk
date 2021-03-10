@@ -112,17 +112,6 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      alternativeSources: [
-        { media: '(min-width: 961px)', value: 'w=840&h=560' },
-        { media: '(min-width: 701px)', value: 'w=510&h=340' },
-      ],
-      defaultSource: {
-        value: 'w=320&h=200',
-      },
-    };
-  },
   computed: {
     buttonText() {
       return this.inCart
