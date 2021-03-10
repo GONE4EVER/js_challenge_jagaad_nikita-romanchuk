@@ -7,10 +7,9 @@
       :srcset="src.value"
     >
     <img
-      v-bind="$attrs"
+      :class="imageClass"
       :src="defaultImage"
       alt="Product"
-      class="product__image"
       itemprop="image"
     >
   </picture>
@@ -24,6 +23,10 @@ export default {
     imageUrl: {
       type: String,
       required: true,
+    },
+    imageClass: {
+      type: String,
+      default: '',
     },
   },
   data() {

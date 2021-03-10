@@ -1,7 +1,10 @@
 <template>
   <article class="product">
     <figure class="product__image-wrapper">
-      <adaptive-picture :image-url="imageUrl" />
+      <adaptive-picture
+        :image-url="imageUrl"
+        image-class="product__image"
+      />
 
       <base-button
         class="product__wishlist-button button--wishlist"
