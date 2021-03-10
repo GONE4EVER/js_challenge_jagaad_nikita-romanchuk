@@ -1,16 +1,12 @@
 <template>
   <article class="product">
     <figure class="product__image-wrapper">
-      <img
-        :src="imageUrl"
-        class="product__image"
-        alt="Product"
-        itemprop="image"
-      >
+      <adaptive-picture :image-url="imageUrl" />
+
       <base-button
         class="product__wishlist-button button--wishlist"
-        :class="wishlistButtonDisabled"
         round
+        :class="wishlistButtonDisabled"
         @click="addToWishlist(id)"
       >
         <add-to-wishlist-icon />
@@ -65,6 +61,7 @@
 <script>
 import { mapActions } from 'vuex';
 
+import AdaptivePicture from '@/common/components/AdaptivePicture.vue';
 import { cartModule, wishlistModule } from '@/store';
 
 import AddToWishlistIcon from './AddToWishlistIcon.vue';
@@ -75,6 +72,7 @@ const DESCRIPTION_PLACEHOLDER = 'description missing';
 export default {
   components: {
     AddToWishlistIcon,
+    AdaptivePicture,
   },
   props: {
     inCart: {
@@ -114,6 +112,17 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      alternativeSources: [
+        { media: '(min-width: 961px)', value: 'w=840&h=560' },
+        { media: '(min-width: 701px)', value: 'w=510&h=340' },
+      ],
+      defaultSource: {
+        value: 'w=320&h=200',
+      },
+    };
+  },
   computed: {
     buttonText() {
       return this.inCart
@@ -148,111 +157,110 @@ export default {
   height: 100%;
 
   background-color: $backgroundColor--light;
-}
 
+  /* image */
+  .product__image-wrapper {
+    padding: 20px;
+    text-align: center;
+    position: relative;
 
-/* image */
-.product__image-wrapper {
-  padding: 20px;
-  text-align: center;
-  position: relative;
-}
+    .product__image {
+      width: 100%;
+      height: auto;
+    }
+  }
 
-.product__image {
-  max-width: 100%;
-  height: auto;
-}
+  /* details */
+  .product__details {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    padding: 10px 20px 20px;
+    text-align: center;
+  }
 
-/* details */
-.product__details {
-  display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
-  padding: 10px 20px 20px;
-  text-align: center;
-}
+  /* titles */
+  .product__title {
+    padding-bottom: 10px;
 
-/* titles */
-.product__title {
-  padding-bottom: 10px;
+    font-family: 'Lato-Bold', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1.37px;
+    text-transform: uppercase;
+  }
 
-  font-family: 'Lato-Bold', sans-serif;
-  font-size: 14px;
-  letter-spacing: 1.37px;
-  text-transform: uppercase;
-}
+  .product__subtitle {
+    padding-bottom: 10px;
 
-.product__subtitle {
-  padding-bottom: 10px;
+    font-size: 12px;
+    line-height: 19px;
+    letter-spacing: 0.43px;
 
-  font-size: 12px;
-  line-height: 19px;
-  letter-spacing: 0.43px;
+    color: $fontColor--secondary
+  }
 
-  color: $fontColor--secondary
-}
+  /* prices */
+  .product__price {
+    padding-bottom: 20px;
 
+    font-family: 'Lato-Bold', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2.33px;
+  }
 
-/* prices */
-.product__price {
-  padding-bottom: 20px;
+  .product__price--strike {
+    margin-right: 10px;
+    text-decoration: line-through;
+  }
 
-  font-family: 'Lato-Bold', sans-serif;
-  font-size: 14px;
-  letter-spacing: 2.33px;
-}
+  .product__price--discounted {
+    color: #F54B5E;
+  }
 
-.product__price--strike {
-  margin-right: 10px;
-  text-decoration: line-through;
-}
+  .product__add-to-cart {
+    width: 100%;
+    margin-top: 10px;
+    margin-top: auto;
+  }
 
-.product__price--discounted {
-  color: #F54B5E;
-}
+  /* controls */
+  .button--disabled {
+    pointer-events: none;
+  }
 
-.product__add-to-cart {
-  width: 100%;
-  margin-top: 10px;
-  margin-top: auto;
-}
+  .button--in-cart {
+    pointer-events: none;
 
-/* controls */
-.button--disabled {
-  pointer-events: none;
-}
+    background-color: $buttonColor--primary;
+  }
 
-.button--in-cart {
-  pointer-events: none;
+  .button--in-wishlist {
+    & > .icon {
+      fill: $buttonColor--secondary;
+    }
+  }
 
-  background-color: $buttonColor--primary;
-}
+  .button--wishlist:hover {
+    border: 1px solid $buttonColor--secondary;
 
-.button--in-wishlist {
-  & > .icon {
-    fill: $buttonColor--secondary;
+    & > .icon {
+      fill: $buttonColor--secondary;
+    }
+  }
+
+  .product__wishlist-button {
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }
 
-.button--wishlist:hover {
-  border: 1px solid $buttonColor--secondary;
-
-  & > .icon {
-    fill: $buttonColor--secondary;
-  }
-}
-
-.product__wishlist-button {
-  width: 35px;
-  height: 35px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
 
 </style>
