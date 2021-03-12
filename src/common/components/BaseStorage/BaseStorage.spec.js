@@ -22,6 +22,14 @@ const fakeProps = {
   placeholder: 'fakePlaceholder',
 };
 
+const baseStorageFactory = (propsOverride = {}) => mount(BaseStorage, {
+  localVue,
+  propsData: {
+    ...fakeProps,
+    ...propsOverride,
+  },
+});
+
 describe('BaseStorage: Base output', () => {
   let baseStorageWrapper;
 
@@ -31,13 +39,7 @@ describe('BaseStorage: Base output', () => {
   });
 
   it('Component\'s output matches default values when data is empty', () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-        data: [],
-      },
-    });
+    baseStorageWrapper = baseStorageFactory({ data: [] });
 
     expect(baseStorageWrapper.vm).toBeTruthy();
 
@@ -61,15 +63,9 @@ describe('BaseStorage: Base output', () => {
   });
 
   it('Component\'s output matches default values when data is not empty', () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-      },
-    });
+    baseStorageWrapper = baseStorageFactory();
 
     expect(baseStorageWrapper.vm).toBeTruthy();
-
     expect(baseStorageWrapper.vm.dataItemsCount).toBe(fakeProps.data.length);
 
     expect(baseStorageWrapper.vm.counterVisible).toBeTruthy();
@@ -93,12 +89,7 @@ describe('BaseStorage: Base output', () => {
   });
 
   it('Interacts correctly with the app-dropdown component', async () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-      },
-    });
+    baseStorageWrapper = baseStorageFactory();
 
     expect(
       baseStorageWrapper
@@ -136,13 +127,7 @@ describe('BaseStorage: interaction with data items', () => {
   });
 
   it('Adding items works correctly', async () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-        data: [],
-      },
-    });
+    baseStorageWrapper = baseStorageFactory({ data: [] });
 
     expect(baseStorageWrapper
       .find('.baseStorage-counter')
@@ -159,12 +144,7 @@ describe('BaseStorage: interaction with data items', () => {
 
 
   it('Removing item emits the desired event with expected item property value', async () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-      },
-    });
+    baseStorageWrapper = baseStorageFactory();
 
     const menuListWrapper = baseStorageWrapper.findComponent(MenuList);
 
@@ -181,12 +161,7 @@ describe('BaseStorage: interaction with data items', () => {
   });
 
   it('Removing items works correctly', async () => {
-    baseStorageWrapper = mount(BaseStorage, {
-      localVue,
-      propsData: {
-        ...fakeProps,
-      },
-    });
+    baseStorageWrapper = baseStorageFactory();
 
     const counterEl = baseStorageWrapper.find('.baseStorage-counter');
 
