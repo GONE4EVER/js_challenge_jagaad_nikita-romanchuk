@@ -24,6 +24,7 @@ const storeFactory = (override, extraModule) => new Vuex.Store({
     ...extraModule,
   },
 });
+
 const theCartFactory = store => mount(TheCart, {
   mixins: [ formatPriceMixin ],
   store,
@@ -55,6 +56,8 @@ describe('TheCart: Base output', () => {
     store = storeFactory();
     cartWrapper = theCartFactory(store);
 
+    expect(cartWrapper.vm.cartItems.length).toBe(0);
+
     const totalPriceEl = cartWrapper.find('.cartPrice');
 
     expect(totalPriceEl.exists()).toBeTruthy();
@@ -73,8 +76,9 @@ describe('TheCart: Base output', () => {
         list: [ fakeDataItem ],
       },
     });
-
     cartWrapper = theCartFactory(store);
+
+    expect(cartWrapper.vm.cartItems).toEqual([ fakeDataItem ]);
 
     const totalPriceEl = cartWrapper.find('.cartPrice');
 
@@ -89,7 +93,7 @@ describe('TheCart: Base output', () => {
   });
 });
 
-describe('The Cart: Interaction with store', () => {
+describe('TheCart: Interaction with store', () => {
   let cartWrapper;
 
   let store;
@@ -108,7 +112,6 @@ describe('The Cart: Interaction with store', () => {
         },
       },
     });
-
     cartWrapper = theCartFactory(store);
 
     /**
@@ -145,7 +148,6 @@ describe('The Cart: Interaction with store', () => {
         },
       },
     );
-
     cartWrapper = theCartFactory(store);
 
     /**
