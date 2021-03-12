@@ -41,6 +41,9 @@ export default {
     list: {
       type: Array,
       required: true,
+      validator(data) {
+        return !data.some(({ id, title, bestPrice }) => !title || !bestPrice || !id);
+      },
     },
     max: {
       type: String,
