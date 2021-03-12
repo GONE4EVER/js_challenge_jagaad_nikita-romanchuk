@@ -11,145 +11,159 @@ import Cart from 'domains/Activity/service/Cart.repository';
 
 import TheCart from './TheCart.vue';
 
+
 const localVue = createLocalVue();
+const cartModule = new Cart();
+
+const storeFactory = (override, extraModule) => new Vuex.Store({
+  modules: {
+    [cartModule.name]: {
+      ...cartModule.initializeModule(),
+      ...override,
+    },
+    ...extraModule,
+  },
+});
+const theCartFactory = store => mount(TheCart, {
+  mixins: [ formatPriceMixin ],
+  store,
+  localVue,
+});
 
 localVue.use(Vuex);
 localVue.component('app-dropdown', AppDropdown);
 localVue.component('base-button', BaseButton);
 
-const cartModule = new Cart();
 
-describe('ProductCard: Base output', () => {
+const fakeDataItem = {
+  id: 123321,
+  bestPrice: 80,
+  title: 'fakeItem',
+};
+
+describe('TheCart: Base output', () => {
   let cartWrapper;
 
   let store;
 
-  beforeEach(() => {
-    store = new Vuex.Store({
-      modules: {
-        [cartModule.name]: cartModule.initializeModule(),
-      },
-    });
-
-    cartWrapper = mount(TheCart, {
-      mixins: [ formatPriceMixin ],
-      store,
-      localVue,
-    });
-  });
-
   afterEach(() => {
     cartWrapper.destroy();
+    store = null;
   });
 
-  it('Component\'s output matches default values', () => {
-    expect(cartWrapper.vm).toBeTruthy();
-    expect(cartWrapper.find('.cart-counter').exists()).toBeFalsy();
+  it('Component\'s output matches default values when data is empty', () => {
+    store = storeFactory();
+    cartWrapper = theCartFactory(store);
 
-    const priceContainer = cartWrapper.find('.cart__price');
+    const totalPriceEl = cartWrapper.find('.cartPrice');
 
-    expect(priceContainer.exists()).toBeTruthy();
+    expect(totalPriceEl.exists()).toBeTruthy();
 
-    const [ selectedCurrency, totalPriceOutput ] = priceContainer
+    const [ selectedCurrency, totalPriceOutput ] = totalPriceEl
       .text()
       .split(' ');
 
-    expect(cartWrapper.vm.$data.selectedCurrency).toEqual(selectedCurrency);
+    expect(cartWrapper.vm.$data.selectedCurrency).toBe(selectedCurrency);
     expect(totalPriceOutput).toBe('0.00');
   });
 
-  it('Interacts correctly with the app-dropdown component', async () => {
-    expect(
-      cartWrapper
-        .find('.dropdown-wrapper')
-        .exists(),
-    ).toBeTruthy();
-
-    const appDropdownWrapper = cartWrapper.findComponent(AppDropdown);
-
-    expect(appDropdownWrapper.exists()).toBeTruthy();
-    expect(appDropdownWrapper.vm.$data.visible).toBeFalsy();
-
-    const openModalElementWrapper = cartWrapper.findComponent({
-      ref: appDropdownWrapper.vm.$data.elementRef,
+  it('Component\'s output matches default values when data is not empty', () => {
+    store = storeFactory({
+      state: {
+        list: [ fakeDataItem ],
+      },
     });
 
-    expect(openModalElementWrapper.exists()).toBeTruthy();
+    cartWrapper = theCartFactory(store);
 
-    await openModalElementWrapper.trigger('click');
-    expect(appDropdownWrapper.vm.$data.visible).toBeTruthy();
+    const totalPriceEl = cartWrapper.find('.cartPrice');
 
-    await appDropdownWrapper.trigger('click');
-    expect(appDropdownWrapper.vm.$data.visible).toBeTruthy();
+    expect(totalPriceEl.exists()).toBeTruthy();
+
+    const [ selectedCurrency, totalPriceOutput ] = totalPriceEl
+      .text()
+      .split(' ');
+
+    expect(cartWrapper.vm.$data.selectedCurrency).toBe(selectedCurrency);
+    expect(totalPriceOutput).toBe(fakeDataItem.bestPrice.toFixed(2));
   });
 });
 
-describe('Product card: Adding items to cart', () => {
-  const sampleItemData = {
-    id: 123321,
-    discount: 20, // used in cart.repository for obtaining total price
-    retailPrice: {
-      formattedValue: '€ 80',
-      value: 80,
-    },
-  };
+describe('The Cart: Interaction with store', () => {
+  let cartWrapper;
 
-  it('Cart total price changes when adding/removing items', async () => {
-    const store = new Vuex.Store({
-      modules: {
-        [cartModule.name]: cartModule.initializeModule(),
-        activities: {
-          namespaced: true,
-          state: {
-            list: [ sampleItemData ],
-          },
+  let store;
+
+  afterEach(() => {
+    cartWrapper.destroy();
+    store = null;
+  });
+
+  it('Cart reacts to adding item to the collection correctly', async () => {
+    store = storeFactory(null, {
+      activities: {
+        namespaced: true,
+        state: {
+          list: [ fakeDataItem ],
         },
       },
     });
 
-    const cartWrapper = mount(TheCart, {
-      mixins: [ formatPriceMixin ],
-      store,
-      localVue,
-    });
+    cartWrapper = theCartFactory(store);
 
-    // check total price & it's DOM output
-    expect(cartWrapper.vm.totalPrice).toBe(0);
-    expect(
-      cartWrapper
-        .find('.cart-counter')
-        .exists(),
-    ).toBeFalsy();
-
+    /**
+     * imitate adding item which happens in some other
+     * place in the app
+     */
     await cartWrapper.vm.$store.dispatch(
       cartModule.actionsList.ADD_TO_COLLECTION,
-      sampleItemData.id,
+      fakeDataItem.id,
     );
 
-    // check total price in vue instance
-    expect(cartWrapper.vm.totalPrice).toBe(sampleItemData.retailPrice.value);
+    expect(cartWrapper.vm.cartItems).toEqual([ fakeDataItem ]);
+    expect(cartWrapper.vm.totalPrice).toBe(fakeDataItem.bestPrice);
 
-    await localVue.nextTick();
-    // check total price DOM output
-    expect(
-      cartWrapper
-        .find('.cart-counter')
-        .text(),
-    ).toBe('1');
-
-    const priceContainer = cartWrapper.find('.cart__price');
-    const [ , totalPriceOutput ] = priceContainer
+    const [ , totalPriceOutput ] = cartWrapper.find('.cartPrice')
       .text()
       .split(' ');
 
-    expect(cartWrapper.vm.totalPrice).toBe(sampleItemData.retailPrice.value);
-    expect(totalPriceOutput).toBe(sampleItemData.retailPrice.value.toFixed(2));
+    expect(totalPriceOutput).toBe(fakeDataItem.bestPrice.toFixed(2));
+  });
 
-    await cartWrapper.vm.$store.dispatch(
-      cartModule.actionsList.REMOVE_FROM_COLLECTION,
-      sampleItemData.id,
+  it('Cart reacts to removing item from the collection correctly', async () => {
+    store = storeFactory(
+      {
+        state: {
+          list: [ fakeDataItem ],
+        },
+      }, {
+        activities: {
+          namespaced: true,
+          state: {
+            list: [ fakeDataItem ],
+          },
+        },
+      },
     );
 
+    cartWrapper = theCartFactory(store);
+
+    /**
+     * imitate removing item which is emitted
+     * from the cart menu list
+     */
+    await cartWrapper.vm.$store.dispatch(
+      cartModule.actionsList.REMOVE_FROM_COLLECTION,
+      fakeDataItem.id,
+    );
+
+    expect(cartWrapper.vm.cartItems.length).toBe(0);
     expect(cartWrapper.vm.totalPrice).toBe(0);
+
+    const [ , totalPriceOutput ] = cartWrapper.find('.cartPrice')
+      .text()
+      .split(' ');
+
+    expect(totalPriceOutput).toBe('0.00');
   });
 });
