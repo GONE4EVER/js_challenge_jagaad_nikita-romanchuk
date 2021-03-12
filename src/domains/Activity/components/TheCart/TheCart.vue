@@ -1,51 +1,22 @@
 <template>
-  <app-dropdown>
-    <template #default="{elementRef}">
-      <div
-        :ref="elementRef"
-        class="cart cart__count"
-      >
-        <div class="cart__price">
-          {{ selectedCurrency }} {{ totalPrice | formatPrice }}
-        </div>
+  <base-storage
+    :data="cartItems"
+    :title="titleText"
+    :placeholder="placeholder"
+    @on-remove-item="removeFromCart"
+  >
+    <div class="cartPrice">
+      {{ selectedCurrency }} {{ totalPrice | formatPrice }}
+    </div>
 
-        <cart-icon />
-
-        <span
-          v-if="cartItemsCount > 0"
-          class="cart-counter"
-        >
-          {{ cartItemsCount }}
-        </span>
-      </div>
-    </template>
-
-    <template #dropdownContent>
-      <h3 class="cart-content__title">
-        {{ titleText }}
-      </h3>
-
-      <menu-list
-        v-if="!!cartItemsCount"
-        :list="cartItems"
-        max="320px"
-        @remove="removeFromCart"
-      />
-
-      <div
-        v-else
-        class="cart-content__placeholder"
-      >
-        {{ placeholder }}
-      </div>
-    </template>
-  </app-dropdown>
+    <cart-icon />
+  </base-storage>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 
-import MenuList from '@/common/components/MenuList.vue';
+import BaseStorage from '@/common/components/BaseStorage/BaseStorage.vue';
 import formatPrice from '@/common/mixins/formatPrice';
 import { cartModule } from '@/store';
 
@@ -57,7 +28,7 @@ const TITLE_TEXT = 'Your Cart';
 export default {
   components: {
     CartIcon,
-    MenuList,
+    BaseStorage,
   },
   mixins: [ formatPrice ],
   data: () => ({
@@ -67,7 +38,6 @@ export default {
   }),
   computed: {
     ...mapState(cartModule.name, {
-      cartItemsCount: state => state.list.length,
       cartItems: state => state.list,
     }),
     ...mapGetters({
@@ -96,7 +66,7 @@ export default {
     fill: $buttonColor--secondary;
   }
 
-  .cart__price {
+  .cartPrice {
     margin-right: 5px;
     font-size: 12px;
     line-height: 12px;
@@ -147,5 +117,11 @@ export default {
   line-height: 19px;
   letter-spacing: 0.43px;
   color: $fontColor--secondary;
+}
+
+.cartPrice {
+  margin-right: 5px;
+  font-size: 12px;
+  line-height: 12px;
 }
 </style>

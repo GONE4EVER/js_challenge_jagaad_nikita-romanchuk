@@ -19,15 +19,7 @@ class Cart extends ProductsCollection {
   getTotalPrice = state => {
     const { list } = state;
 
-    return list.reduce((result, item) => {
-      const { discount, retailPrice, originalRetailPrice } = item;
-
-      const price = discount > 0
-        ? retailPrice.value
-        : originalRetailPrice.value;
-
-      return result + price;
-    }, 0);
+    return list.reduce((result, { bestPrice }) => result + bestPrice, 0);
   }
 }
 

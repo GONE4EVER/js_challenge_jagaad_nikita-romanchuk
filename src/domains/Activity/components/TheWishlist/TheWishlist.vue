@@ -1,45 +1,18 @@
 <template>
-  <app-dropdown>
-    <template #default="{elementRef}">
-      <div
-        :ref="elementRef"
-        class="wishlist wishlist__count"
-      >
-        <wishlist-icon />
-
-        <span
-          v-if="!!wishlistItemsCount"
-          class="wishlist-counter"
-        >{{ wishlistItemsCount }}</span>
-      </div>
-    </template>
-
-    <template #dropdownContent>
-      <h3 class="wishlist-content__title">
-        {{ titleText }}
-      </h3>
-
-      <menu-list
-        v-if="!!wishlistItemsCount"
-        :list="wishlistItems"
-        max="300px"
-        @remove="removeFromWishlist"
-      />
-
-      <div
-        v-else
-        class="wishlist-content__placeholder"
-      >
-        {{ placeholder }}
-      </div>
-    </template>
-  </app-dropdown>
+  <base-storage
+    :data="wishlistItems"
+    :placeholder="placeholder"
+    :title="titleText"
+    @on-remove-item="removeFromWishlist"
+  >
+    <wishlist-icon />
+  </base-storage>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 
-import MenuList from '@/common/components/MenuList.vue';
+import BaseStorage from '@/common/components/BaseStorage/BaseStorage.vue';
 import { wishlistModule } from '@/store';
 
 import WishlistIcon from './WishlistIcon.vue';
@@ -49,8 +22,8 @@ const TITLE_TEXT = 'Your Wishlist';
 
 export default {
   components: {
-    MenuList,
     WishlistIcon,
+    BaseStorage,
   },
   data: () => ({
     placeholder: PLACEHOLDER_TEXT,
@@ -58,7 +31,6 @@ export default {
   }),
   computed: {
     ...mapState(wishlistModule.name, {
-      wishlistItemsCount: state => state.list.length,
       wishlistItems: state => state.list,
     }),
   },
