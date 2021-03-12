@@ -33,7 +33,6 @@ const baseStorageFactory = (propsOverride = {}) => mount(BaseStorage, {
 describe('BaseStorage: Base output', () => {
   let baseStorageWrapper;
 
-
   afterEach(() => {
     baseStorageWrapper.destroy();
   });
