@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
 
 import Cart from '@/domains/Activity/service/Cart.repository';
 import Wishlist from '@/domains/Activity/service/Wishlist.repository';
@@ -18,7 +17,6 @@ const wishlistModule = new Wishlist();
 
 const store = new Vuex.Store({
   plugins: [
-    createPersistedState(),
     subscribeToVenueCurrentIdChange,
     wishlistModule.registerPlugin(cartModule),
   ],
