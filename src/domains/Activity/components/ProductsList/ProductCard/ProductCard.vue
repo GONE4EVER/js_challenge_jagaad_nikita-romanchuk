@@ -36,7 +36,10 @@
         itemscope
         itemtype="http://schema.org/Offer"
       >
-        <span :class="{'product__price--strike': discount > 0}">
+        <span
+          :class="{ 'product__price--strike': discount > 0 }"
+          itemprop="price"
+        >
           {{ originalRetailPrice.formattedValue }}
         </span>
 
@@ -51,7 +54,7 @@
 
       <base-button
         class="product__add-to-cart"
-        :class="{'button--in-cart':inCart}"
+        :class="{ 'button--in-cart': inCart }"
         primary
         @click="addToCart(id)"
       >
@@ -78,6 +81,22 @@ export default {
     AdaptivePicture,
   },
   props: {
+    description: {
+      type: String,
+      default: '',
+    },
+    discount: {
+      type: Number,
+      required: true,
+    },
+    id: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
     inCart: {
       type: Boolean,
       default: false,
@@ -86,32 +105,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    id: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      default: '',
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
-    discount: {
-      type: Number,
+    originalRetailPrice: {
+      type: Object,
       required: true,
     },
     retailPrice: {
       type: Object,
       required: true,
     },
-    originalRetailPrice: {
-      type: Object,
+    title: {
+      type: String,
       required: true,
     },
   },
