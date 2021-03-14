@@ -4,7 +4,7 @@
 
 ## Prerequesits
 In order to make things work you should have a few tools installed:
-- [Node.JS](https://nodejs.org/en/)
+- [Node.JS](https://nodejs.org/en/) of version either 12.18.2 or 14.16.0
 - [Docker](https://www.docker.com/get-started)
 - Your [favourite IDE](https://code.visualstudio.com/)
 
