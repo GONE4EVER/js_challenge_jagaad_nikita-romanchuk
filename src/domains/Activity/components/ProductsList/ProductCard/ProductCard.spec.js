@@ -1,43 +1,39 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-// import activitiesModule from '@/domains/Activity/store';
-// import { activitiesModuleName } from '@/domains/Activity/store/constants';
-// import { subscribeToVenueCurrentIdChange } from '@/domains/Activity/store/plugins';
-// import venuesModule from '@/domains/Venue/store';
-// import { venuesModuleName } from '@/domains/Venue/store/constants';
+import activitiesModule from '@/domains/Activity/store';
+import { activitiesModuleName } from '@/domains/Activity/store/constants';
+import { subscribeToVenueCurrentIdChange } from '@/domains/Activity/store/plugins';
+import venuesModule from '@/domains/Venue/store';
 import BaseButton from 'common/components/BaseButton.vue';
-// import Cart from 'domains/Activity/service/Cart.repository';
-// import Wishlist from 'domains/Activity/service/Wishlist.repository';
+import Cart from 'domains/Activity/service/Cart.repository';
+import Wishlist from 'domains/Activity/service/Wishlist.repository';
 
 import ProductCard from './ProductCard.vue';
 
 
 const localVue = createLocalVue();
-// const cartModule = new Cart();
-// const wishlistModule = new Wishlist();
+const cartModule = new Cart();
+const wishlistModule = new Wishlist();
 
 localVue.use(Vuex);
 localVue.component('base-button', BaseButton);
 
-// const storeFactory = override => new Vuex.Store({
-//   plugins: [
-//     subscribeToVenueCurrentIdChange,
-//     wishlistModule.registerPlugin(cartModule),
-//   ],
-//   modules: {
-//     [venuesModuleName]: {
-//       ...venuesModule,
-//       ...override,
-//     },
-//     [activitiesModuleName]: {
-//       ...activitiesModule,
-//       ...override,
-//     },
-//     [cartModule.name]: cartModule.initializeModule(),
-//     [wishlistModule.name]: wishlistModule.initializeModule(),
-//   },
-// });
+const storeFactory = override => new Vuex.Store({
+  plugins: [
+    subscribeToVenueCurrentIdChange,
+    wishlistModule.registerPlugin(cartModule),
+  ],
+  modules: {
+    [venuesModule.name]: venuesModule,
+    [activitiesModuleName]: {
+      ...activitiesModule,
+      ...override,
+    },
+    [cartModule.name]: cartModule.initializeModule(),
+    [wishlistModule.name]: wishlistModule.initializeModule(),
+  },
+});
 
 const productCardFactory = (store, props) => mount(ProductCard, {
   store,
@@ -73,7 +69,7 @@ describe('ProductCard: Base output', () => {
     // store = null;
   });
 
-  it('Component\'s buttons are enabled when item is not in cart/wishlist', () => {
+  it('Component\'s buttons are enabled when item is neither in cart nor in wishlist', () => {
     productWrapper = productCardFactory(null, { ...fakeItem });
 
     expect(productWrapper.vm.inCart).toBeFalsy();
@@ -186,5 +182,65 @@ describe('ProductCard: Base output', () => {
 
     expect(discountPriceEl.classes('product__price--discounted')).toBeTruthy();
     expect(discountPriceEl.text()).toBe(fakeItem.retailPrice.formattedValue);
+  });
+});
+
+describe('Product Card: Interaction with store', () => {
+  let store;
+
+  let productWrapper;
+
+  afterEach(() => {
+    productWrapper.destroy();
+  });
+
+  it('Product is added to the cart correctly', async () => {
+    store = storeFactory({
+      state: {
+        list: [ fakeItem ],
+      },
+    });
+
+    productWrapper = productCardFactory(store, { ...fakeItem });
+
+    await productWrapper
+      .find('.product__add-to-cart')
+      .trigger('click');
+
+    expect(productWrapper.vm.$store.state[cartModule.name].list).toEqual([ fakeItem ]);
+
+    // imitate props update after item was added to the collection
+    await productWrapper.setProps({ inCart: true });
+
+    expect(
+      productWrapper
+        .find('.product__add-to-cart')
+        .classes('button--in-cart'),
+    ).toBeTruthy();
+  });
+
+  it('Product is added to the wishlist correctly', async () => {
+    store = storeFactory({
+      state: {
+        list: [ fakeItem ],
+      },
+    });
+
+    productWrapper = productCardFactory(store, { ...fakeItem });
+
+    await productWrapper
+      .find('.product__wishlist-button')
+      .trigger('click');
+
+    expect(productWrapper.vm.$store.state[wishlistModule.name].list).toEqual([ fakeItem ]);
+
+    // imitate props update after item was added to the collection
+    await productWrapper.setProps({ inWishlist: true });
+
+    expect(
+      productWrapper
+        .find('.product__wishlist-button')
+        .classes('button--in-wishlist'),
+    ).toBeTruthy();
   });
 });
