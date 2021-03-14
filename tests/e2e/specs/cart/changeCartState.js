@@ -14,12 +14,12 @@ const addItem = () => {
     .click();
 
   // check if in-cart items cound had increased
-  cy.get('.cart-counter')
+  cy.get('.baseStorage-counter')
     .should('be.visible')
     .contains('1');
 
   // check if total had price changed and equals item price
-  cy.get('.cart__price')
+  cy.get('.cartPrice')
     .should('be.visible')
     .then($cartPriceEl => {
       cy.get('.product-list__item')
@@ -46,7 +46,8 @@ const addItem = () => {
     .find('button.product__wishlist-button')
     .should('have.class', 'button--disabled');
 
-  cy.get('.cart')
+  cy.get('.baseStorage')
+    .first()
     .click();
 
   cy.get('.dropdown-wrapper')
@@ -87,7 +88,7 @@ describe('Adding/removing items to/from cart', () => {
         cy.get('.menu-list')
           .should('not.exist');
 
-        cy.get('.cart-content__placeholder')
+        cy.get('.baseStorage-content__placeholder')
           .should('be.visible')
           .should('not.be.empty');
       });

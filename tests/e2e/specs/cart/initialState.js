@@ -11,12 +11,12 @@ describe('Cart initial state', () => {
   it('Cart initial state is valid', () => {
     cy.get('.header-bag')
       .within(() => {
-        cy.get('.cart')
+        cy.get('.baseStorage')
           .and('be.visible');
-        cy.get('.cart-counter')
+        cy.get('.baseStorage-counter')
           .should('not.exist');
 
-        cy.get('.cart__price')
+        cy.get('.cartPrice')
           .and('be.visible')
           .and('contain', '0.00');
       });
